@@ -1,0 +1,91 @@
+package com.backend.bibliomor_servidor.DTOs;
+
+import java.util.Set;
+
+import com.backend.bibliomor_servidor.Enum.EstadoLibro;
+
+public class LibroRequest {
+
+    private String isbn;
+    private String titulo;
+    private String autor;
+    private String sinopsis;
+    private String curso;
+    private int unidadesTotales;
+    private int unidadesDisponibles;
+    private EstadoLibro estado;
+    private Set<Long> generos; // IDs de los géneros asociados
+
+    // Getters y Setters
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getSinopsis() {
+        return sinopsis;
+    }
+
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public int getUnidadesTotales() {
+        return unidadesTotales;
+    }
+
+    public void setUnidadesTotales(int unidadesTotales) {
+        this.unidadesTotales = unidadesTotales;
+    }
+
+    public int getUnidadesDisponibles() {
+        return unidadesDisponibles;
+    }
+
+    public void setUnidadesDisponibles(int unidadesDisponibles) {
+        this.unidadesDisponibles = unidadesDisponibles;
+    }
+
+    public EstadoLibro getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoLibro estado) {
+        this.estado = estado;
+    }
+
+    public Set<Long> getGeneros() {
+        return generos;
+    }
+
+    public void setGeneros(Set<Long> generos) {
+        this.generos = generos;
+    }
+}
