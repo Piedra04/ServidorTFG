@@ -3,9 +3,7 @@ package com.backend.bibliomor_servidor.Controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.bibliomor_servidor.DTOs.LoginRequest;
-import com.backend.bibliomor_servidor.DTOs.RegisterRequest;
-import com.backend.bibliomor_servidor.DTOs.UserAdminRequest;
+import com.backend.bibliomor_servidor.DTOs.UsuarioRequest;
 import com.backend.bibliomor_servidor.Services.UsuarioService;
 
 import java.util.Map;
@@ -28,7 +26,7 @@ public class UsuarioController {
 
     // Ruta donde se crea un usuario nuevo al registrarse
     @PostMapping("/registro")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> register(@RequestBody UsuarioRequest registerRequest) {
         boolean validar = usuarioService.registerUser(registerRequest.getNombre(), registerRequest.getApellidos(),
                 registerRequest.getFechaNacimiento(), registerRequest.getCorreo(), registerRequest.getContraseña(),
                 registerRequest.getCurso());
@@ -43,7 +41,7 @@ public class UsuarioController {
 
     // Ruta de login, para ver si las credenciales del usuario son correctas
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody UsuarioRequest loginRequest) {
         boolean validar = usuarioService.authenticateUser(loginRequest.getCorreo(), loginRequest.getContraseña());
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Credenciales correctas"));
@@ -55,13 +53,13 @@ public class UsuarioController {
 
     // Ruta para crear un usuario manualmente (sin registro)
     @PostMapping("/crear")
-    public ResponseEntity<?> createUser(@RequestBody UserAdminRequest createUserRequest) {
+    public ResponseEntity<?> createUser(@RequestBody UsuarioRequest createUserRequest) {
         boolean validar = usuarioService.createUser(
                 createUserRequest.getNombre(),
                 createUserRequest.getApellidos(),
                 createUserRequest.getFechaNacimiento(),
                 createUserRequest.getCorreo(),
-                createUserRequest.getConstraseña(),
+                createUserRequest.getContraseña(),
                 createUserRequest.getCurso(),
                 createUserRequest.getRol()
         );
@@ -76,13 +74,13 @@ public class UsuarioController {
 
     // Ruta para editar un usuario existente
     @PutMapping("/editar")
-    public ResponseEntity<?> modifyUser(@RequestBody UserAdminRequest modifyUserRequest) {
+    public ResponseEntity<?> modifyUser(@RequestBody UsuarioRequest modifyUserRequest) {
         boolean validar = usuarioService.modifyUser(
                 modifyUserRequest.getCorreo(),
                 modifyUserRequest.getNombre(),
                 modifyUserRequest.getApellidos(),
                 modifyUserRequest.getFechaNacimiento(),
-                modifyUserRequest.getConstraseña(),
+                modifyUserRequest.getContraseña(),
                 modifyUserRequest.getCurso(),
                 modifyUserRequest.getRol()
         );
