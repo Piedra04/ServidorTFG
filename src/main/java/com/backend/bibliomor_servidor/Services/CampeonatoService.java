@@ -10,6 +10,8 @@ import com.backend.bibliomor_servidor.Repositories.CampeonatoRepository;
 import com.backend.bibliomor_servidor.Repositories.JuegoRepository;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CampeonatoService {
@@ -19,6 +21,16 @@ public class CampeonatoService {
 
     @Autowired
     private JuegoRepository juegoRepository;
+
+    // Método para obtener un campeonato por su ID
+    public Optional<Campeonato> getCampeonatoById(Long id) {
+        return campeonatoRepository.findById(id);
+    }
+
+    // Método para obtener todos los campeonatos
+    public List<Campeonato> getAllCampeonatos() {
+        return campeonatoRepository.findAll();
+    }
 
     // Método para crear un nuevo campeonato
     public boolean createCampeonato(LocalDate fechaInicio, LocalDate fechaFin, String descripcion, Long idJuego,

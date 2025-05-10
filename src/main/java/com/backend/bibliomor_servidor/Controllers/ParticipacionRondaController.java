@@ -17,8 +17,26 @@ public class ParticipacionRondaController {
     @Autowired
     private ParticipacionRondaService participacionRondaService;
 
+    // Ruta para obtener todas las participaciones
+    @GetMapping
+    public ResponseEntity<?> getAllParticipaciones() {
+        if (participacionRondaService.getAllParticipaciones().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se han encontrado participaciones"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(participacionRondaService.getAllParticipaciones());
+    }
+
+    // Ruta para obtener una participación por su ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getParticipacionById(@PathVariable Long id) {
+        if (participacionRondaService.getParticipacionById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado la participación"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(participacionRondaService.getParticipacionById(id));
+    }
+
     // Ruta para crear una nueva participación
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<?> createParticipacion(@RequestBody ParticipacionRondaRequest request) {
         boolean validar = participacionRondaService.createParticipacion(
             request.getUsuarioId(), request.getRondaId(), request.getResultado()
@@ -33,7 +51,7 @@ public class ParticipacionRondaController {
     }
 
     // Ruta para modificar una participación existente
-    @PutMapping("/editar")
+    @PutMapping
     public ResponseEntity<?> modifyParticipacion(@RequestBody ParticipacionRondaRequest request) {
         boolean validar = participacionRondaService.modifyParticipacion(
             request.getId(), request.getUsuarioId(), request.getRondaId(), request.getResultado()
@@ -48,7 +66,7 @@ public class ParticipacionRondaController {
     }
 
     // Ruta para eliminar una participación por su ID
-    @DeleteMapping("/eliminar")
+    @DeleteMapping
     public ResponseEntity<?> deleteParticipacion(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
         boolean validar = participacionRondaService.deleteParticipacion(id);

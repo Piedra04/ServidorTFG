@@ -1,5 +1,7 @@
 package com.backend.bibliomor_servidor.Services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,16 @@ public class JuegoService {
 
     @Autowired
     private JuegoRepository juegoRepository;
+
+    // Método para obtener un juego por su ID
+    public Juego getGameById(Long id) {
+        return juegoRepository.findById(id).orElse(null);
+    }
+
+    // Método para obtener todos los juegos
+    public List<Juego> getAllGames() {
+        return juegoRepository.findAll();
+    }
 
     // Método para crear un nuevo juego
     public boolean createGame(String nombre, int nUnidades) {

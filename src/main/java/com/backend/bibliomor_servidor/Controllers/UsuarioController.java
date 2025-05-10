@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,33 @@ public class UsuarioController {
     // Servicio de usuario
     @Autowired
     private UsuarioService usuarioService;
+
+    // Ruta para obtener todos los usuarios
+    @GetMapping
+    public ResponseEntity<?> getAllUsers() {
+        if (usuarioService.getAllUsers().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se han encontrado usuarios"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getAllUsers());
+    }
+
+    // Ruta para obtener un usuario por su correo
+    @GetMapping("/{correo}")
+    public ResponseEntity<?> getUserByCorreo(@RequestBody String correo) {
+        if (usuarioService.getUserByCorreo(correo) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el usuario"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getUserByCorreo(correo));
+    }
+
+    // Ruta para obtener un usuario por su ID
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getUserById(@RequestBody Long id) {
+        if (usuarioService.getUserById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el usuario"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getUserById(id));
+    }
 
     // Ruta donde se crea un usuario nuevo al registrarse
     @PostMapping("/registro")
@@ -52,7 +80,7 @@ public class UsuarioController {
 
 
     // Ruta para crear un usuario manualmente (sin registro)
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UsuarioRequest createUserRequest) {
         boolean validar = usuarioService.createUser(
                 createUserRequest.getNombre(),
@@ -73,7 +101,7 @@ public class UsuarioController {
     }
 
     // Ruta para editar un usuario existente
-    @PutMapping("/editar")
+    @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UsuarioRequest modifyUserRequest) {
         boolean validar = usuarioService.modifyUser(
                 modifyUserRequest.getCorreo(),
@@ -94,7 +122,7 @@ public class UsuarioController {
     }
 
     // Ruta para eliminar un usuario por su correo
-    @DeleteMapping("/eliminar")
+    @DeleteMapping
     public ResponseEntity<?> deleteUser(@RequestBody Map<String, String> request) {
         String correo = request.get("correo");
         boolean validar = usuarioService.deleteUser(correo);

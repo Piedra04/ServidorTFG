@@ -11,6 +11,7 @@ import com.backend.bibliomor_servidor.Repositories.LibroRepository;
 import com.backend.bibliomor_servidor.Repositories.UsuarioRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,16 @@ public class ReservaLibroService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    // Método para obtener una reserva por su ID
+    public ReservaLibro getReservaById(Long id) {
+        return reservaLibroRepository.findById(id).orElse(null);
+    }
+
+    // Método para obtener todas las reservas
+    public List<ReservaLibro> getAllReservas() {
+        return reservaLibroRepository.findAll();
+    }
 
     // Método para crear una nueva reserva de libro
     public boolean createReserva(LocalDate fechaAdquisicion, LocalDate fechaDevolucion, String libroId, Long usuarioId) {

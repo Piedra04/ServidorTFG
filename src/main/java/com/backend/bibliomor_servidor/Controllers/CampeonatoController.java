@@ -6,9 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.backend.bibliomor_servidor.DTOs.CampeonatoRequest;
+import com.backend.bibliomor_servidor.Models.Campeonato;
 import com.backend.bibliomor_servidor.Services.CampeonatoService;
 
+import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/campeonato")
@@ -17,8 +21,29 @@ public class CampeonatoController {
     @Autowired
     private CampeonatoService campeonatoService;
 
+    @GetMapping
+    public ResponseEntity<?> getAllCampeonatos() {
+        List<Campeonato> campeonatos = campeonatoService.getAllCampeonatos();
+        
+        if (campeonatos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se han encontrado campeonatos"));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(campeonatos);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCampeonatoById(@PathVariable Long id) {;
+        
+        if (campeonatoService.getCampeonatoById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el campeonato"));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(campeonatoService.getCampeonatoById(id));
+        }
+    }
+
     // Ruta para crear un nuevo campeonato
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<?> createCampeonato(@RequestBody CampeonatoRequest campeonatoRequest) {
         boolean validar = campeonatoService.createCampeonato(
                 campeonatoRequest.getFechaInicio(),
@@ -37,7 +62,7 @@ public class CampeonatoController {
     }
 
     // Ruta para modificar un campeonato existente
-    @PutMapping("/editar")
+    @PutMapping
     public ResponseEntity<?> modifyCampeonato(@RequestBody CampeonatoRequest campeonatoRequest) {
         boolean validar = campeonatoService.modifyCampeonato(
                 campeonatoRequest.getId(),
@@ -57,7 +82,7 @@ public class CampeonatoController {
     }
 
     // Ruta para eliminar un campeonato por su ID
-    @DeleteMapping("/eliminar")
+    @DeleteMapping
     public ResponseEntity<?> deleteCampeonato(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
         boolean validar = campeonatoService.deleteCampeonato(id);

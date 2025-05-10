@@ -17,8 +17,26 @@ public class JuegoController {
     @Autowired
     private JuegoService juegoService;
 
+    // Ruta para obtener todos los juegos
+    @GetMapping
+    public ResponseEntity<?> getAllGames() {
+        if (juegoService.getAllGames().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se han encontrado juegos"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(juegoService.getAllGames());
+    }
+
+    // Ruta para obtener un juego por su ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getGameById(@PathVariable Long id) {
+        if (juegoService.getGameById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el juego"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(juegoService.getGameById(id));
+    }
+
     // Ruta para crear un nuevo juego
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<?> createGame(@RequestBody JuegoRequest gameRequest) {
         boolean validar = juegoService.createGame(gameRequest.getNombre(), gameRequest.getnUnidades());
 
@@ -31,7 +49,7 @@ public class JuegoController {
     }
 
     // Ruta para modificar un juego existente
-    @PutMapping("/editar")
+    @PutMapping
     public ResponseEntity<?> modifyGame(@RequestBody JuegoRequest gameRequest) {
         boolean validar = juegoService.modifyGame(gameRequest.getId(), gameRequest.getNombre(), gameRequest.getnUnidades());
 
@@ -44,7 +62,7 @@ public class JuegoController {
     }
 
     // Ruta para eliminar un juego por su ID
-    @DeleteMapping("/eliminar")
+    @DeleteMapping
     public ResponseEntity<?> deleteGame(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
         boolean validar = juegoService.deleteGame(id);

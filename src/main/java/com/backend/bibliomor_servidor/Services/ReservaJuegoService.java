@@ -12,6 +12,7 @@ import com.backend.bibliomor_servidor.Repositories.JuegoRepository;
 import com.backend.bibliomor_servidor.Repositories.UsuarioRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,16 @@ public class ReservaJuegoService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    // Método para obtener una reserva por su ID
+    public ReservaJuego getReservaById(Long id) {
+        return reservaJuegoRepository.findById(id).orElse(null);
+    }
+
+    // Método para obtener todas las reservas
+    public List<ReservaJuego> getAllReservas() {
+        return reservaJuegoRepository.findAll();
+    }
 
     // Método para crear una nueva reserva de juego
     public boolean createReserva(LocalDate fecha, Recreo recreo, Long juegoId, Long usuarioId) {

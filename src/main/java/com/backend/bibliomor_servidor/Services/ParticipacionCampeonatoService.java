@@ -10,6 +10,7 @@ import com.backend.bibliomor_servidor.Repositories.ParticipacionCampeonatoReposi
 import com.backend.bibliomor_servidor.Repositories.UsuarioRepository;
 import com.backend.bibliomor_servidor.Repositories.CampeonatoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,16 @@ public class ParticipacionCampeonatoService {
 
     @Autowired
     private CampeonatoRepository campeonatoRepository;
+
+    // Método para obtener una participación por su ID
+    public ParticipacionCampeonato getParticipacionById(Long id) {
+        return participacionCampeonatoRepository.findById(id).orElse(null);
+    }
+
+    // Método para obtener todas las participaciones
+    public List<ParticipacionCampeonato> getAllParticipaciones() {
+        return participacionCampeonatoRepository.findAll();
+    }
 
     // Método para crear una nueva participación
     public boolean createParticipacion(Long usuarioId, Long campeonatoId) {

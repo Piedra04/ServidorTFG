@@ -1,5 +1,7 @@
 package com.backend.bibliomor_servidor.Services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,16 @@ public class GeneroService {
 
     @Autowired
     private GeneroRepository generoRepository;
+
+    // Método para obtener un género por su ID
+    public Genero getGeneroById(Long id) {
+        return generoRepository.findById(id).orElse(null);
+    }
+
+    // Método para obtener todos los géneros
+    public List<Genero> getAllGeneros() {
+        return generoRepository.findAll();
+    }
 
     public boolean createGenero(String nombre) {
 

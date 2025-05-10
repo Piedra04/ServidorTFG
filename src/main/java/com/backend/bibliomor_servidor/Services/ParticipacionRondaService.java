@@ -11,6 +11,7 @@ import com.backend.bibliomor_servidor.Repositories.ParticipacionRondaRepository;
 import com.backend.bibliomor_servidor.Repositories.UsuarioRepository;
 import com.backend.bibliomor_servidor.Repositories.RondaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,16 @@ public class ParticipacionRondaService {
 
     @Autowired
     private RondaRepository rondaRepository;
+
+    // Método para obtener una participación por su ID
+    public ParticipacionRonda getParticipacionById(Long id) {
+        return participacionRondaRepository.findById(id).orElse(null);
+    }
+
+    // Método para obtener todas las participaciones
+    public List<ParticipacionRonda> getAllParticipaciones() {
+        return participacionRondaRepository.findAll();
+    }
 
     // Método para crear una nueva participación en una ronda
     public boolean createParticipacion(Long usuarioId, Long rondaId, Resultado resultado) {

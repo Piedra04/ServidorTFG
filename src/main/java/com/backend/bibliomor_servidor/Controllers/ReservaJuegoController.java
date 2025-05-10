@@ -17,8 +17,17 @@ public class ReservaJuegoController {
     @Autowired
     private ReservaJuegoService reservaJuegoService;
 
+    // Ruta para obtener todas las reservas de juegos
+    @GetMapping
+    public ResponseEntity<?> getAllReservas() {
+        if (reservaJuegoService.getAllReservas().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se han encontrado reservas"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(reservaJuegoService.getAllReservas());
+    }
+
     // Ruta para crear una nueva reserva
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<?> createReserva(@RequestBody ReservaJuegoRequest request) {
         boolean validar = reservaJuegoService.createReserva(
             request.getFecha(), request.getRecreo(), request.getJuegoId(), request.getUsuarioId()
@@ -33,7 +42,7 @@ public class ReservaJuegoController {
     }
 
     // Ruta para modificar una reserva existente
-    @PutMapping("/editar")
+    @PutMapping
     public ResponseEntity<?> modifyReserva(@RequestBody ReservaJuegoRequest request) {
         boolean validar = reservaJuegoService.modifyReserva(
             request.getId(), request.getFecha(), request.getRecreo(), request.getJuegoId(), request.getUsuarioId()
@@ -48,7 +57,7 @@ public class ReservaJuegoController {
     }
 
     // Ruta para eliminar una reserva por su ID
-    @DeleteMapping("/eliminar")
+    @DeleteMapping
     public ResponseEntity<?> deleteReserva(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
         boolean validar = reservaJuegoService.deleteReserva(id);

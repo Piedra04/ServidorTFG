@@ -1,6 +1,7 @@
 package com.backend.bibliomor_servidor.Services;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,21 @@ public class UsuarioService {
 
     @Autowired
     private PasswordHashService passwordHashService;
+
+    // Método para obtener todos los usuarios
+    public List<Usuario> getAllUsers() {
+        return usuarioRepository.findAll();
+    }
+
+    // Método para obtener un usuario por su correo
+    public Usuario getUserByCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo);
+    }
+
+    // Método para obtener un usuario por su ID
+    public Usuario getUserById(Long id) {
+        return usuarioRepository.findById(id).orElse(null);
+    }
 
     // Método para registrar un nuevo usuario
     public boolean registerUser(String nombre, String apellidos, LocalDate fechaNacimiento, String correo,

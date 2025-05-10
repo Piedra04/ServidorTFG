@@ -9,6 +9,7 @@ import com.backend.bibliomor_servidor.Repositories.RondaRepository;
 import com.backend.bibliomor_servidor.Repositories.CampeonatoRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,16 @@ public class RondaService {
 
     @Autowired
     private CampeonatoRepository campeonatoRepository;
+
+    // Método para obtener una ronda por su ID
+    public Optional<Ronda> getRondaById(Long id) {
+        return rondaRepository.findById(id);
+    }
+
+    // Método para obtener todas las rondas
+    public List<Ronda> getAllRondas() {
+        return rondaRepository.findAll();
+    }
 
     // Método para crear una nueva ronda
     public boolean createRonda(int nRonda, LocalDate fecha, Long campeonatoId) {

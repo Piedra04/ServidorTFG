@@ -17,8 +17,26 @@ public class LibroController {
     @Autowired
     private LibroService libroService;
 
+    // Ruta para obtener todos los libros
+    @GetMapping
+    public ResponseEntity<?> getAllLibros() {
+        if (libroService.getAllLibros().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se han encontrado libros"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(libroService.getAllLibros());
+    }
+
+    // Ruta para obtener un libro por su ISBN
+    @GetMapping("/{isbn}")
+    public ResponseEntity<?> getLibroByIsbn(@PathVariable String isbn) {
+        if (libroService.getLibroByIsbn(isbn) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el libro"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(libroService.getLibroByIsbn(isbn));
+    }
+
     // Ruta para crear un nuevo libro
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<?> createLibro(@RequestBody LibroRequest libroRequest) {
 
         boolean validar = libroService.createLibro(
@@ -41,7 +59,7 @@ public class LibroController {
     }
 
     // Ruta para modificar un libro existente
-    @PutMapping("/editar")
+    @PutMapping
     public ResponseEntity<?> modifyLibro(@RequestBody LibroRequest libroRequest) {
         boolean validar = libroService.modifyLibro(
                 libroRequest.getIsbn(),
@@ -63,7 +81,7 @@ public class LibroController {
     }
 
     // Ruta para eliminar un libro por su ISBN
-    @DeleteMapping("/eliminar")
+    @DeleteMapping
     public ResponseEntity<?> deleteLibro(@RequestBody Map<String, String> request) {
         String isbn = request.get("isbn");
         boolean validar = libroService.deleteLibro(isbn);

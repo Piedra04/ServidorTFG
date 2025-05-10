@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -19,6 +20,16 @@ public class LibroService {
 
     @Autowired
     private GeneroRepository generoRepository;
+
+    // Método para obtener un libro por su ISBN
+    public Optional<Libro> getLibroByIsbn(String isbn) {
+        return libroRepository.findById(isbn);
+    }
+
+    // Método para obtener todos los libros
+    public List<Libro> getAllLibros() {
+        return libroRepository.findAll();
+    }
 
     // Método para crear un libro
     public boolean createLibro(String isbn, String titulo, String autor, String sinopsis, String curso,

@@ -17,8 +17,26 @@ public class RondaController {
     @Autowired
     private RondaService rondaService;
 
+    // Ruta para obtener todas las rondas
+    @GetMapping
+    public ResponseEntity<?> getAllRondas() {
+        if (rondaService.getAllRondas().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se han encontrado rondas"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(rondaService.getAllRondas());
+    }
+
+    // Ruta para obtener una ronda por su ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getRondaById(@PathVariable Long id) {
+        if (rondaService.getRondaById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado la ronda"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(rondaService.getRondaById(id));
+    }
+
     // Ruta para crear una nueva ronda
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<?> createRonda(@RequestBody RondaRequest request) {
         boolean validar = rondaService.createRonda(request.getnRonda(), request.getFecha(), request.getCampeonatoId());
 
@@ -31,7 +49,7 @@ public class RondaController {
     }
 
     // Ruta para modificar una ronda existente
-    @PutMapping("/editar")
+    @PutMapping
     public ResponseEntity<?> modifyRonda(@RequestBody RondaRequest request) {
         boolean validar = rondaService.modifyRonda(request.getId(), request.getnRonda(), request.getFecha(), request.getCampeonatoId());
 
@@ -44,7 +62,7 @@ public class RondaController {
     }
 
     // Ruta para eliminar una ronda por su ID
-    @DeleteMapping("/eliminar")
+    @DeleteMapping
     public ResponseEntity<?> deleteRonda(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
         boolean validar = rondaService.deleteRonda(id);

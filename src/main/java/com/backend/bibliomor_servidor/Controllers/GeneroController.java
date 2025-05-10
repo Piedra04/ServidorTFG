@@ -17,8 +17,24 @@ public class GeneroController {
     @Autowired
     private GeneroService generoService;
 
+    @GetMapping
+    public ResponseEntity<?> getAllGeneros() {
+        if (generoService.getAllGeneros().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se han encontrado géneros"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(generoService.getAllGeneros());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getGeneroById(@PathVariable Long id) {
+        if (generoService.getGeneroById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el género"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(generoService.getGeneroById(id));
+    }
+
     // Ruta para crear un nuevo género
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<?> createGenero(@RequestBody GeneroRequest generoRequest) {
         boolean validar = generoService.createGenero(generoRequest.getNombre());
 
@@ -31,7 +47,7 @@ public class GeneroController {
     }
 
     // Ruta para modificar un género existente
-    @PutMapping("/editar")
+    @PutMapping
     public ResponseEntity<?> modifyGenero(@RequestBody GeneroRequest generoRequest) {
         boolean validar = generoService.modifyGenero(generoRequest.getId(), generoRequest.getNombre());
 
@@ -44,7 +60,7 @@ public class GeneroController {
     }
 
     // Ruta para eliminar un género por su ID
-    @DeleteMapping("/eliminar")
+    @DeleteMapping
     public ResponseEntity<?> deleteGenero(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
         boolean validar = generoService.deleteGenero(id);
