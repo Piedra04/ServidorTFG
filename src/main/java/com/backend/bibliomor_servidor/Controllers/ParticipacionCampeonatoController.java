@@ -17,7 +17,11 @@ public class ParticipacionCampeonatoController {
     @Autowired
     private ParticipacionCampeonatoService participacionCampeonatoService;
 
-    // Ruta para obtener todas las participaciones
+    /**
+     * Obtiene todas las participaciones.
+     * 
+     * @return ResponseEntity con la lista de participaciones o un mensaje NOT_FOUND si no hay participaciones.
+     */
     @GetMapping
     public ResponseEntity<?> getAllParticipaciones() {
         if (participacionCampeonatoService.getAllParticipaciones().isEmpty()) {
@@ -26,7 +30,12 @@ public class ParticipacionCampeonatoController {
         return ResponseEntity.status(HttpStatus.OK).body(participacionCampeonatoService.getAllParticipaciones());
     }
 
-    // Ruta para obtener una participación por su ID
+    /**
+     * Obtiene una participación por su ID.
+     * 
+     * @param id ID de la participación a buscar.
+     * @return ResponseEntity con la participación encontrada o un mensaje NOT_FOUND si no existe.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getParticipacionById(@PathVariable Long id) {
         if (participacionCampeonatoService.getParticipacionById(id) == null) {
@@ -35,7 +44,12 @@ public class ParticipacionCampeonatoController {
         return ResponseEntity.status(HttpStatus.OK).body(participacionCampeonatoService.getParticipacionById(id));
     }
 
-    // Ruta para crear una nueva participación
+    /**
+     * Crea una nueva participación.
+     * 
+     * @param request Objeto con los datos de la participación a crear.
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping
     public ResponseEntity<?> createParticipacion(@RequestBody ParticipacionCampeonatoRequest request) {
         boolean validar = participacionCampeonatoService.createParticipacion(request.getUsuarioId(), request.getCampeonatoId());
@@ -48,7 +62,12 @@ public class ParticipacionCampeonatoController {
         }
     }
 
-    // Ruta para modificar una participación existente
+    /**
+     * Modifica una participación existente.
+     * 
+     * @param request Objeto con los datos actualizados de la participación.
+     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     */
     @PutMapping
     public ResponseEntity<?> modifyParticipacion(@RequestBody ParticipacionCampeonatoRequest request) {
         boolean validar = participacionCampeonatoService.modifyParticipacion(request.getId(), request.getUsuarioId(), request.getCampeonatoId());
@@ -61,7 +80,12 @@ public class ParticipacionCampeonatoController {
         }
     }
 
-    // Ruta para eliminar una participación por su ID
+    /**
+     * Elimina una participación por su ID.
+     * 
+     * @param request Mapa que contiene el ID de la participación a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteParticipacion(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");

@@ -19,53 +19,70 @@ public class UsuarioService {
     @Autowired
     private PasswordHashService passwordHashService;
 
-    // Método para obtener todos los usuarios
+    /**
+     * Obtiene todos los usuarios.
+     * 
+     * @return Lista de todos los usuarios registrados.
+     */
     public List<Usuario> getAllUsers() {
         return usuarioRepository.findAll();
     }
 
-    // Método para obtener un usuario por su correo
+    /**
+     * Obtiene un usuario por su correo.
+     * 
+     * @param correo Correo del usuario a buscar.
+     * @return El usuario encontrado o null si no existe.
+     */
     public Usuario getUserByCorreo(String correo) {
         return usuarioRepository.findByCorreo(correo);
     }
 
-    // Método para obtener un usuario por su ID
+    /**
+     * Obtiene un usuario por su ID.
+     * 
+     * @param id ID del usuario a buscar.
+     * @return El usuario encontrado o null si no existe.
+     */
     public Usuario getUserById(Long id) {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    // Método para registrar un nuevo usuario
+    /**
+     * Registra un nuevo usuario.
+     * 
+     * @param nombre Nombre del usuario.
+     * @param apellidos Apellidos del usuario.
+     * @param fechaNacimiento Fecha de nacimiento del usuario.
+     * @param correo Correo del usuario.
+     * @param constraseña Contraseña del usuario.
+     * @param curso Curso asociado al usuario.
+     * @return true si el usuario se registró correctamente, false si el correo ya está registrado.
+     */
     public boolean registerUser(String nombre, String apellidos, LocalDate fechaNacimiento, String correo,
             String constraseña, String curso) {
 
         if (usuarioRepository.existsByCorreo(correo)) {
             return false;
         } else {
-            // Hashear la contraseña antes de guardarla
             String hashedPassword = passwordHashService.hashPassword(constraseña);
 
-            // Ponemos el rol de profesor o alumno, y si es profesor ponemos el curso a null
-            Rol rol;
-            if (curso == null || curso.trim().isEmpty()) {
-                rol = Rol.PROFESOR;
-                curso = null;
-            } else {
-                rol = Rol.ALUMNO;
-            }
+            Rol rol = (curso == null || curso.trim().isEmpty()) ? Rol.PROFESOR : Rol.ALUMNO;
 
-            // Crear un nuevo usuario y guardarlo en la base de datos
             Usuario newUser = new Usuario(nombre, apellidos, fechaNacimiento, hashedPassword, correo, rol, curso, fechaNacimiento);
-            // Asignar el curso
-            newUser.setCurso(curso);
-            // Guardar el usuario en la base de datos
             usuarioRepository.save(newUser);
             return true;
         }
     }
 
-    // Método para verificar las credenciales del usuario
+    /**
+     * Verifica las credenciales del usuario.
+     * 
+     * @param correo Correo del usuario.
+     * @param constraseña Contraseña en texto plano.
+     * @return true si las credenciales son correctas, false en caso contrario.
+     */
     public boolean authenticateUser(String correo, String constraseña) {
-
         if (usuarioRepository.existsByCorreo(correo)) {
             String hashedPassword = usuarioRepository.findByCorreo(correo).getContraseña();
             return passwordHashService.verifyPassword(constraseña, hashedPassword);
@@ -74,10 +91,12 @@ public class UsuarioService {
         }
     }
 
-    // Pasamos ahora a los metodos que puede realizar un administrador desde un
-    // panel de control
-
-    // Método para eliminar un usuario por su correo
+    /**
+     * Elimina un usuario por su correo.
+     * 
+     * @param correo Correo del usuario a eliminar.
+     * @return true si el usuario se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteUser(String correo) {
         if (usuarioRepository.existsByCorreo(correo)) {
             Usuario user = usuarioRepository.findByCorreo(correo);
@@ -88,13 +107,23 @@ public class UsuarioService {
         }
     }
 
-    // Método para modificar un usuario por su correo
+    /**
+     * Modifica un usuario existente.
+     * 
+     * @param correo Correo del usuario a modificar.
+     * @param nombre Nuevo nombre del usuario.
+     * @param apellidos Nuevos apellidos del usuario.
+     * @param fechaNacimiento Nueva fecha de nacimiento del usuario.
+     * @param constraseña Nueva contraseña del usuario.
+     * @param curso Nuevo curso asociado al usuario.
+     * @param rol Nuevo rol del usuario.
+     * @return true si el usuario se modificó correctamente, false si no se encontró.
+     */
     public boolean modifyUser(String correo, String nombre, String apellidos, LocalDate fechaNacimiento,
             String constraseña, String curso, Rol rol) {
         if (usuarioRepository.existsByCorreo(correo)) {
             Usuario user = usuarioRepository.findByCorreo(correo);
 
-            // Actualizar solo si el campo no es null o vacío
             if (nombre != null && !nombre.trim().isEmpty()) {
                 user.setNombre(nombre);
             }
@@ -105,7 +134,6 @@ public class UsuarioService {
                 user.setFechaNacimiento(fechaNacimiento);
             }
             if (constraseña != null && !constraseña.trim().isEmpty()) {
-                // Hashear la contraseña antes de guardarla
                 String hashedPassword = passwordHashService.hashPassword(constraseña);
                 user.setContraseña(hashedPassword);
             }
@@ -116,7 +144,6 @@ public class UsuarioService {
                 user.setRol(rol);
             }
 
-            // Guardar los cambios en la base de datos
             usuarioRepository.save(user);
             return true;
         } else {
@@ -124,22 +151,28 @@ public class UsuarioService {
         }
     }
 
-    // Metodo para crear un usuario a mano, sin registro
+    /**
+     * Crea un usuario manualmente (sin registro).
+     * 
+     * @param nombre Nombre del usuario.
+     * @param apellidos Apellidos del usuario.
+     * @param fechaNacimiento Fecha de nacimiento del usuario.
+     * @param correo Correo del usuario.
+     * @param constraseña Contraseña del usuario.
+     * @param curso Curso asociado al usuario.
+     * @param rol Rol del usuario.
+     * @return true si el usuario se creó correctamente, false si el correo ya está registrado.
+     */
     public boolean createUser(String nombre, String apellidos, LocalDate fechaNacimiento, String correo,
             String constraseña, String curso, Rol rol) {
         if (usuarioRepository.existsByCorreo(correo)) {
             return false;
         } else {
-            // Hashear la contraseña antes de guardarla
             String hashedPassword = passwordHashService.hashPassword(constraseña);
 
-            // Crear un nuevo usuario y guardarlo en la base de datos
             Usuario newUser = new Usuario(nombre, apellidos, fechaNacimiento, hashedPassword, correo, rol, curso, fechaNacimiento);
-
-            // Guardar el usuario en la base de datos
             usuarioRepository.save(newUser);
             return true;
         }
     }
-
 }

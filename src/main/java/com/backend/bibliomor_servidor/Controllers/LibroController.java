@@ -17,7 +17,11 @@ public class LibroController {
     @Autowired
     private LibroService libroService;
 
-    // Ruta para obtener todos los libros
+    /**
+     * Obtiene todos los libros.
+     * 
+     * @return ResponseEntity con la lista de libros o un mensaje NOT_FOUND si no hay libros.
+     */
     @GetMapping
     public ResponseEntity<?> getAllLibros() {
         if (libroService.getAllLibros().isEmpty()) {
@@ -26,7 +30,12 @@ public class LibroController {
         return ResponseEntity.status(HttpStatus.OK).body(libroService.getAllLibros());
     }
 
-    // Ruta para obtener un libro por su ISBN
+    /**
+     * Obtiene un libro por su ISBN.
+     * 
+     * @param isbn ISBN del libro a buscar.
+     * @return ResponseEntity con el libro encontrado o un mensaje NOT_FOUND si no existe.
+     */
     @GetMapping("/{isbn}")
     public ResponseEntity<?> getLibroByIsbn(@PathVariable String isbn) {
         if (libroService.getLibroByIsbn(isbn) == null) {
@@ -35,7 +44,12 @@ public class LibroController {
         return ResponseEntity.status(HttpStatus.OK).body(libroService.getLibroByIsbn(isbn));
     }
 
-    // Ruta para crear un nuevo libro
+    /**
+     * Crea un nuevo libro.
+     * 
+     * @param libroRequest Objeto con los datos del libro a crear.
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping
     public ResponseEntity<?> createLibro(@RequestBody LibroRequest libroRequest) {
 
@@ -58,7 +72,12 @@ public class LibroController {
         }
     }
 
-    // Ruta para modificar un libro existente
+    /**
+     * Modifica un libro existente.
+     * 
+     * @param libroRequest Objeto con los datos actualizados del libro.
+     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     */
     @PutMapping
     public ResponseEntity<?> modifyLibro(@RequestBody LibroRequest libroRequest) {
         boolean validar = libroService.modifyLibro(
@@ -80,7 +99,12 @@ public class LibroController {
         }
     }
 
-    // Ruta para eliminar un libro por su ISBN
+    /**
+     * Elimina un libro por su ISBN.
+     * 
+     * @param request Mapa que contiene el ISBN del libro a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteLibro(@RequestBody Map<String, String> request) {
         String isbn = request.get("isbn");

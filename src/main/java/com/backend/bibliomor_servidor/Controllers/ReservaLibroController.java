@@ -17,7 +17,11 @@ public class ReservaLibroController {
     @Autowired
     private ReservaLibroService reservaLibroService;
 
-    // Ruta para obtener todas las reservas de libros
+    /**
+     * Obtiene todas las reservas de libros.
+     * 
+     * @return ResponseEntity con la lista de reservas o un mensaje NOT_FOUND si no hay reservas.
+     */
     @GetMapping
     public ResponseEntity<?> getAllReservas() {
         if (reservaLibroService.getAllReservas().isEmpty()) {
@@ -26,7 +30,12 @@ public class ReservaLibroController {
         return ResponseEntity.status(HttpStatus.OK).body(reservaLibroService.getAllReservas());
     }
 
-    // Ruta para crear una nueva reserva
+    /**
+     * Crea una nueva reserva de libro.
+     * 
+     * @param request Objeto con los datos de la reserva a crear.
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping
     public ResponseEntity<?> createReserva(@RequestBody ReservaLibroRequest request) {
         boolean validar = reservaLibroService.createReserva(
@@ -41,7 +50,12 @@ public class ReservaLibroController {
         }
     }
 
-    // Ruta para modificar una reserva existente
+    /**
+     * Modifica una reserva existente.
+     * 
+     * @param request Objeto con los datos actualizados de la reserva.
+     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     */
     @PutMapping
     public ResponseEntity<?> modifyReserva(@RequestBody ReservaLibroRequest request) {
         boolean validar = reservaLibroService.modifyReserva(
@@ -56,7 +70,12 @@ public class ReservaLibroController {
         }
     }
 
-    // Ruta para eliminar una reserva por su ID
+    /**
+     * Elimina una reserva por su ID.
+     * 
+     * @param request Mapa que contiene el ID de la reserva a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteReserva(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");

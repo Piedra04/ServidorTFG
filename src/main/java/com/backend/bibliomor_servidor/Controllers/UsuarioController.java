@@ -11,21 +11,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    // Servicio de usuario
     @Autowired
     private UsuarioService usuarioService;
 
-    // Ruta para obtener todos los usuarios
+    /**
+     * Obtiene todos los usuarios.
+     * 
+     * @return ResponseEntity con la lista de usuarios o un mensaje NOT_FOUND si no hay usuarios.
+     */
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         if (usuarioService.getAllUsers().isEmpty()) {
@@ -34,7 +33,12 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getAllUsers());
     }
 
-    // Ruta para obtener un usuario por su correo
+    /**
+     * Obtiene un usuario por su correo.
+     * 
+     * @param correo Correo del usuario a buscar.
+     * @return ResponseEntity con el usuario encontrado o un mensaje NOT_FOUND si no existe.
+     */
     @GetMapping("/{correo}")
     public ResponseEntity<?> getUserByCorreo(@RequestBody String correo) {
         if (usuarioService.getUserByCorreo(correo) == null) {
@@ -43,7 +47,12 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getUserByCorreo(correo));
     }
 
-    // Ruta para obtener un usuario por su ID
+    /**
+     * Obtiene un usuario por su ID.
+     * 
+     * @param id ID del usuario a buscar.
+     * @return ResponseEntity con el usuario encontrado o un mensaje NOT_FOUND si no existe.
+     */
     @GetMapping("/id/{id}")
     public ResponseEntity<?> getUserById(@RequestBody Long id) {
         if (usuarioService.getUserById(id) == null) {
@@ -52,12 +61,22 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getUserById(id));
     }
 
-    // Ruta donde se crea un usuario nuevo al registrarse
+    /**
+     * Registra un nuevo usuario.
+     * 
+     * @param registerRequest Objeto con los datos del usuario a registrar.
+     * @return ResponseEntity con estado CREATED si se registró correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping("/registro")
     public ResponseEntity<?> register(@RequestBody UsuarioRequest registerRequest) {
-        boolean validar = usuarioService.registerUser(registerRequest.getNombre(), registerRequest.getApellidos(),
-                registerRequest.getFechaNacimiento(), registerRequest.getCorreo(), registerRequest.getContraseña(),
-                registerRequest.getCurso());
+        boolean validar = usuarioService.registerUser(
+                registerRequest.getNombre(),
+                registerRequest.getApellidos(),
+                registerRequest.getFechaNacimiento(),
+                registerRequest.getCorreo(),
+                registerRequest.getContraseña(),
+                registerRequest.getCurso()
+        );
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Usuario creado correctamente"));
@@ -67,7 +86,12 @@ public class UsuarioController {
         }
     }
 
-    // Ruta de login, para ver si las credenciales del usuario son correctas
+    /**
+     * Inicia sesión verificando las credenciales del usuario.
+     * 
+     * @param loginRequest Objeto con las credenciales del usuario.
+     * @return ResponseEntity con estado OK si las credenciales son correctas, o UNAUTHORIZED si son incorrectas.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioRequest loginRequest) {
         boolean validar = usuarioService.authenticateUser(loginRequest.getCorreo(), loginRequest.getContraseña());
@@ -78,8 +102,12 @@ public class UsuarioController {
         }
     }
 
-
-    // Ruta para crear un usuario manualmente (sin registro)
+    /**
+     * Crea un usuario manualmente (sin registro).
+     * 
+     * @param createUserRequest Objeto con los datos del usuario a crear.
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UsuarioRequest createUserRequest) {
         boolean validar = usuarioService.createUser(
@@ -100,7 +128,12 @@ public class UsuarioController {
         }
     }
 
-    // Ruta para editar un usuario existente
+    /**
+     * Modifica un usuario existente.
+     * 
+     * @param modifyUserRequest Objeto con los datos actualizados del usuario.
+     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     */
     @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UsuarioRequest modifyUserRequest) {
         boolean validar = usuarioService.modifyUser(
@@ -121,7 +154,12 @@ public class UsuarioController {
         }
     }
 
-    // Ruta para eliminar un usuario por su correo
+    /**
+     * Elimina un usuario por su correo.
+     * 
+     * @param request Mapa que contiene el correo del usuario a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteUser(@RequestBody Map<String, String> request) {
         String correo = request.get("correo");
@@ -134,5 +172,4 @@ public class UsuarioController {
                     .body(Map.of("message", "No se ha encontrado el usuario para eliminar"));
         }
     }
-}
-
+}  

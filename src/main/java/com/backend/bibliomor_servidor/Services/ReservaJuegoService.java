@@ -27,17 +27,34 @@ public class ReservaJuegoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Método para obtener una reserva por su ID
+    /**
+     * Obtiene una reserva por su ID.
+     * 
+     * @param id ID de la reserva a buscar.
+     * @return La reserva encontrada o null si no existe.
+     */
     public ReservaJuego getReservaById(Long id) {
         return reservaJuegoRepository.findById(id).orElse(null);
     }
 
-    // Método para obtener todas las reservas
+    /**
+     * Obtiene todas las reservas.
+     * 
+     * @return Lista de todas las reservas registradas.
+     */
     public List<ReservaJuego> getAllReservas() {
         return reservaJuegoRepository.findAll();
     }
 
-    // Método para crear una nueva reserva de juego
+    /**
+     * Crea una nueva reserva de juego.
+     * 
+     * @param fecha Fecha de la reserva.
+     * @param recreo Recreo en el que se realizará la reserva.
+     * @param juegoId ID del juego a reservar.
+     * @param usuarioId ID del usuario que realiza la reserva.
+     * @return true si la reserva se creó correctamente, false si el juego o el usuario no existen.
+     */
     public boolean createReserva(LocalDate fecha, Recreo recreo, Long juegoId, Long usuarioId) {
         Optional<Juego> juegoOpt = juegoRepository.findById(juegoId);
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
@@ -52,7 +69,16 @@ public class ReservaJuegoService {
         return false; // Juego o usuario no encontrados
     }
 
-    // Método para modificar una reserva existente
+    /**
+     * Modifica una reserva existente.
+     * 
+     * @param id ID de la reserva a modificar.
+     * @param fecha Nueva fecha de la reserva.
+     * @param recreo Nuevo recreo de la reserva.
+     * @param juegoId Nuevo ID del juego a reservar.
+     * @param usuarioId Nuevo ID del usuario que realiza la reserva.
+     * @return true si la reserva se modificó correctamente, false si no se encontró.
+     */
     public boolean modifyReserva(Long id, LocalDate fecha, Recreo recreo, Long juegoId, Long usuarioId) {
         Optional<ReservaJuego> reservaOpt = reservaJuegoRepository.findById(id);
 
@@ -81,7 +107,12 @@ public class ReservaJuegoService {
         return false; // Reserva no encontrada
     }
 
-    // Método para eliminar una reserva por su ID
+    /**
+     * Elimina una reserva por su ID.
+     * 
+     * @param id ID de la reserva a eliminar.
+     * @return true si la reserva se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteReserva(Long id) {
         if (reservaJuegoRepository.existsById(id)) {
             reservaJuegoRepository.deleteById(id);

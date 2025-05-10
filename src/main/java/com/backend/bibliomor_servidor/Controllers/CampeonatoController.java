@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @RestController
 @RequestMapping("/campeonato")
 public class CampeonatoController {
@@ -21,6 +20,11 @@ public class CampeonatoController {
     @Autowired
     private CampeonatoService campeonatoService;
 
+    /**
+     * Obtiene todos los campeonatos.
+     * 
+     * @return ResponseEntity con la lista de campeonatos o un mensaje NOT_FOUND si no hay campeonatos.
+     */
     @GetMapping
     public ResponseEntity<?> getAllCampeonatos() {
         List<Campeonato> campeonatos = campeonatoService.getAllCampeonatos();
@@ -32,9 +36,14 @@ public class CampeonatoController {
         }
     }
 
+    /**
+     * Obtiene un campeonato por su ID.
+     * 
+     * @param id ID del campeonato a buscar.
+     * @return ResponseEntity con el campeonato encontrado o un mensaje NOT_FOUND si no existe.
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCampeonatoById(@PathVariable Long id) {;
-        
+    public ResponseEntity<?> getCampeonatoById(@PathVariable Long id) {
         if (campeonatoService.getCampeonatoById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el campeonato"));
         } else {
@@ -42,7 +51,12 @@ public class CampeonatoController {
         }
     }
 
-    // Ruta para crear un nuevo campeonato
+    /**
+     * Crea un nuevo campeonato.
+     * 
+     * @param campeonatoRequest Objeto con los datos del campeonato a crear.
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping
     public ResponseEntity<?> createCampeonato(@RequestBody CampeonatoRequest campeonatoRequest) {
         boolean validar = campeonatoService.createCampeonato(
@@ -61,7 +75,12 @@ public class CampeonatoController {
         }
     }
 
-    // Ruta para modificar un campeonato existente
+    /**
+     * Modifica un campeonato existente.
+     * 
+     * @param campeonatoRequest Objeto con los datos actualizados del campeonato.
+     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     */
     @PutMapping
     public ResponseEntity<?> modifyCampeonato(@RequestBody CampeonatoRequest campeonatoRequest) {
         boolean validar = campeonatoService.modifyCampeonato(
@@ -81,7 +100,12 @@ public class CampeonatoController {
         }
     }
 
-    // Ruta para eliminar un campeonato por su ID
+    /**
+     * Elimina un campeonato por su ID.
+     * 
+     * @param request Mapa que contiene el ID del campeonato a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteCampeonato(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");

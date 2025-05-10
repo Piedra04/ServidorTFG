@@ -21,17 +21,38 @@ public class LibroService {
     @Autowired
     private GeneroRepository generoRepository;
 
-    // Método para obtener un libro por su ISBN
-    public Optional<Libro> getLibroByIsbn(String isbn) {
-        return libroRepository.findById(isbn);
+    /**
+     * Obtiene un libro por su ISBN.
+     * 
+     * @param isbn ISBN del libro a buscar.
+     * @return Optional que contiene el libro si se encuentra, o vacío si no existe.
+     */
+    public Libro getLibroByIsbn(String isbn) {
+        return libroRepository.findById(isbn).orElse(null);
     }
 
-    // Método para obtener todos los libros
+    /**
+     * Obtiene todos los libros.
+     * 
+     * @return Lista de todos los libros registrados.
+     */
     public List<Libro> getAllLibros() {
         return libroRepository.findAll();
     }
 
-    // Método para crear un libro
+    /**
+     * Crea un nuevo libro.
+     * 
+     * @param isbn ISBN del libro.
+     * @param titulo Título del libro.
+     * @param autor Autor del libro.
+     * @param sinopsis Sinopsis del libro.
+     * @param curso Curso asociado al libro.
+     * @param unidadesTotales Número total de unidades del libro.
+     * @param unidadesDisponibles Número de unidades disponibles del libro.
+     * @param generosIds Conjunto de IDs de géneros asociados al libro.
+     * @return true si el libro se creó correctamente, false si ya existe.
+     */
     public boolean createLibro(String isbn, String titulo, String autor, String sinopsis, String curso,
             int unidadesTotales, int unidadesDisponibles, Set<Long> generosIds) {
 
@@ -39,23 +60,32 @@ public class LibroService {
             return false; // El libro ya existe
         }
 
-        // Pasamos ls IDs de géneros a un Set de Genero
+        // Convertir los IDs de géneros a un conjunto de objetos Genero
         Set<Genero> generos = new HashSet<>();
         for (Long generoId : generosIds) {
             Optional<Genero> generoOpt = generoRepository.findById(generoId);
-            if (generoOpt.isPresent()) {
-                generos.add(generoOpt.get());
-            }
-            
+            generoOpt.ifPresent(generos::add);
         }
-        
+
         // Crear el libro
         Libro libro = new Libro(isbn, titulo, autor, sinopsis, curso, unidadesTotales, unidadesDisponibles, generos);
         libroRepository.save(libro);
         return true;
     }
 
-    // Método para modificar un libro
+    /**
+     * Modifica un libro existente.
+     * 
+     * @param isbn ISBN del libro a modificar.
+     * @param titulo Nuevo título del libro.
+     * @param autor Nuevo autor del libro.
+     * @param sinopsis Nueva sinopsis del libro.
+     * @param curso Nuevo curso asociado al libro.
+     * @param unidadesTotales Nuevo número total de unidades.
+     * @param unidadesDisponibles Nuevo número de unidades disponibles.
+     * @param generosIds Conjunto de IDs de géneros asociados al libro.
+     * @return true si el libro se modificó correctamente, false si no existe.
+     */
     public boolean modifyLibro(String isbn, String titulo, String autor, String sinopsis, String curso,
             int unidadesTotales, int unidadesDisponibles, Set<Long> generosIds) {
         Optional<Libro> optionalLibro = libroRepository.findById(isbn);
@@ -95,7 +125,12 @@ public class LibroService {
         return true;
     }
 
-    // Método para eliminar un libro
+    /**
+     * Elimina un libro por su ISBN.
+     * 
+     * @param isbn ISBN del libro a eliminar.
+     * @return true si el libro se eliminó correctamente, false si no existe.
+     */
     public boolean deleteLibro(String isbn) {
         if (!libroRepository.existsById(isbn)) {
             return false; // El libro no existe

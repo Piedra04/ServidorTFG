@@ -21,17 +21,33 @@ public class RondaService {
     @Autowired
     private CampeonatoRepository campeonatoRepository;
 
-    // Método para obtener una ronda por su ID
-    public Optional<Ronda> getRondaById(Long id) {
-        return rondaRepository.findById(id);
+    /**
+     * Obtiene una ronda por su ID.
+     * 
+     * @param id ID de la ronda a buscar.
+     * @return Optional que contiene la ronda si se encuentra, o vacío si no existe.
+     */
+    public Ronda getRondaById(Long id) {
+        return rondaRepository.findById(id).orElse(null);
     }
 
-    // Método para obtener todas las rondas
+    /**
+     * Obtiene todas las rondas.
+     * 
+     * @return Lista de todas las rondas registradas.
+     */
     public List<Ronda> getAllRondas() {
         return rondaRepository.findAll();
     }
 
-    // Método para crear una nueva ronda
+    /**
+     * Crea una nueva ronda.
+     * 
+     * @param nRonda Número de la ronda.
+     * @param fecha Fecha de la ronda.
+     * @param campeonatoId ID del campeonato asociado a la ronda.
+     * @return true si la ronda se creó correctamente, false si el campeonato no existe.
+     */
     public boolean createRonda(int nRonda, LocalDate fecha, Long campeonatoId) {
         Optional<Campeonato> campeonatoOpt = campeonatoRepository.findById(campeonatoId);
 
@@ -43,7 +59,15 @@ public class RondaService {
         return false; // Campeonato no encontrado
     }
 
-    // Método para modificar una ronda existente
+    /**
+     * Modifica una ronda existente.
+     * 
+     * @param id ID de la ronda a modificar.
+     * @param nRonda Nuevo número de la ronda.
+     * @param fecha Nueva fecha de la ronda.
+     * @param campeonatoId Nuevo ID del campeonato asociado a la ronda.
+     * @return true si la ronda se modificó correctamente, false si no se encontró.
+     */
     public boolean modifyRonda(Long id, int nRonda, LocalDate fecha, Long campeonatoId) {
         Optional<Ronda> rondaOpt = rondaRepository.findById(id);
 
@@ -63,7 +87,12 @@ public class RondaService {
         return false; // Ronda no encontrada
     }
 
-    // Método para eliminar una ronda por su ID
+    /**
+     * Elimina una ronda por su ID.
+     * 
+     * @param id ID de la ronda a eliminar.
+     * @return true si la ronda se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteRonda(Long id) {
         if (rondaRepository.existsById(id)) {
             rondaRepository.deleteById(id);

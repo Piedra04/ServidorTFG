@@ -14,18 +14,32 @@ public class GeneroService {
     @Autowired
     private GeneroRepository generoRepository;
 
-    // Método para obtener un género por su ID
+    /**
+     * Obtiene un género por su ID.
+     * 
+     * @param id ID del género a buscar.
+     * @return El género encontrado o null si no existe.
+     */
     public Genero getGeneroById(Long id) {
         return generoRepository.findById(id).orElse(null);
     }
 
-    // Método para obtener todos los géneros
+    /**
+     * Obtiene todos los géneros.
+     * 
+     * @return Lista de todos los géneros registrados.
+     */
     public List<Genero> getAllGeneros() {
         return generoRepository.findAll();
     }
 
+    /**
+     * Crea un nuevo género.
+     * 
+     * @param nombre Nombre del género a crear.
+     * @return true si el género se creó correctamente, false si el nombre es inválido o ya existe.
+     */
     public boolean createGenero(String nombre) {
-
         if (nombre == null || nombre.trim().isEmpty() || generoRepository.existsByNombre(nombre)) {
             return false;
         }
@@ -36,6 +50,13 @@ public class GeneroService {
         return true;
     }
 
+    /**
+     * Modifica un género existente.
+     * 
+     * @param id ID del género a modificar.
+     * @param nombre Nuevo nombre del género.
+     * @return true si el género se modificó correctamente, false si no se encontró o el nombre ya está registrado.
+     */
     public boolean modifyGenero(Long id, String nombre) {
         if (id == null || nombre == null || nombre.trim().isEmpty()) {
             return false;
@@ -57,14 +78,19 @@ public class GeneroService {
         return true;
     }
 
+    /**
+     * Elimina un género por su ID.
+     * 
+     * @param id ID del género a eliminar.
+     * @return true si el género se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteGenero(Long id) {
         if (generoRepository.existsById(id)) {
             // Eliminar el género de la base de datos
             generoRepository.deleteById(id);
             return true;
         } else {
-            return false; 
+            return false;
         }
-
     }
 }

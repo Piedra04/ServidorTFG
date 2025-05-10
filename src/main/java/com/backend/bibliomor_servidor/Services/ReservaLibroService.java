@@ -26,17 +26,34 @@ public class ReservaLibroService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Método para obtener una reserva por su ID
+    /**
+     * Obtiene una reserva por su ID.
+     * 
+     * @param id ID de la reserva a buscar.
+     * @return La reserva encontrada o null si no existe.
+     */
     public ReservaLibro getReservaById(Long id) {
         return reservaLibroRepository.findById(id).orElse(null);
     }
 
-    // Método para obtener todas las reservas
+    /**
+     * Obtiene todas las reservas.
+     * 
+     * @return Lista de todas las reservas registradas.
+     */
     public List<ReservaLibro> getAllReservas() {
         return reservaLibroRepository.findAll();
     }
 
-    // Método para crear una nueva reserva de libro
+    /**
+     * Crea una nueva reserva de libro.
+     * 
+     * @param fechaAdquisicion Fecha de adquisición del libro.
+     * @param fechaDevolucion Fecha de devolución del libro.
+     * @param libroId ID del libro a reservar.
+     * @param usuarioId ID del usuario que realiza la reserva.
+     * @return true si la reserva se creó correctamente, false si el libro o el usuario no existen.
+     */
     public boolean createReserva(LocalDate fechaAdquisicion, LocalDate fechaDevolucion, String libroId, Long usuarioId) {
         Optional<Libro> libroOpt = libroRepository.findById(libroId);
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
@@ -51,7 +68,16 @@ public class ReservaLibroService {
         return false; // Libro o usuario no encontrados
     }
 
-    // Método para modificar una reserva existente
+    /**
+     * Modifica una reserva existente.
+     * 
+     * @param id ID de la reserva a modificar.
+     * @param fechaAdquisicion Nueva fecha de adquisición del libro.
+     * @param fechaDevolucion Nueva fecha de devolución del libro.
+     * @param libroId Nuevo ID del libro a reservar.
+     * @param usuarioId Nuevo ID del usuario que realiza la reserva.
+     * @return true si la reserva se modificó correctamente, false si no se encontró.
+     */
     public boolean modifyReserva(Long id, LocalDate fechaAdquisicion, LocalDate fechaDevolucion, String libroId, Long usuarioId) {
         Optional<ReservaLibro> reservaOpt = reservaLibroRepository.findById(id);
 
@@ -80,7 +106,12 @@ public class ReservaLibroService {
         return false; // Reserva no encontrada
     }
 
-    // Método para eliminar una reserva por su ID
+    /**
+     * Elimina una reserva por su ID.
+     * 
+     * @param id ID de la reserva a eliminar.
+     * @return true si la reserva se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteReserva(Long id) {
         if (reservaLibroRepository.existsById(id)) {
             reservaLibroRepository.deleteById(id);

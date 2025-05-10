@@ -17,7 +17,11 @@ public class RondaController {
     @Autowired
     private RondaService rondaService;
 
-    // Ruta para obtener todas las rondas
+    /**
+     * Obtiene todas las rondas.
+     * 
+     * @return ResponseEntity con la lista de rondas o un mensaje NOT_FOUND si no hay rondas.
+     */
     @GetMapping
     public ResponseEntity<?> getAllRondas() {
         if (rondaService.getAllRondas().isEmpty()) {
@@ -26,7 +30,12 @@ public class RondaController {
         return ResponseEntity.status(HttpStatus.OK).body(rondaService.getAllRondas());
     }
 
-    // Ruta para obtener una ronda por su ID
+    /**
+     * Obtiene una ronda por su ID.
+     * 
+     * @param id ID de la ronda a buscar.
+     * @return ResponseEntity con la ronda encontrada o un mensaje NOT_FOUND si no existe.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getRondaById(@PathVariable Long id) {
         if (rondaService.getRondaById(id) == null) {
@@ -35,7 +44,12 @@ public class RondaController {
         return ResponseEntity.status(HttpStatus.OK).body(rondaService.getRondaById(id));
     }
 
-    // Ruta para crear una nueva ronda
+    /**
+     * Crea una nueva ronda.
+     * 
+     * @param request Objeto con los datos de la ronda a crear.
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping
     public ResponseEntity<?> createRonda(@RequestBody RondaRequest request) {
         boolean validar = rondaService.createRonda(request.getnRonda(), request.getFecha(), request.getCampeonatoId());
@@ -48,7 +62,12 @@ public class RondaController {
         }
     }
 
-    // Ruta para modificar una ronda existente
+    /**
+     * Modifica una ronda existente.
+     * 
+     * @param request Objeto con los datos actualizados de la ronda.
+     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     */
     @PutMapping
     public ResponseEntity<?> modifyRonda(@RequestBody RondaRequest request) {
         boolean validar = rondaService.modifyRonda(request.getId(), request.getnRonda(), request.getFecha(), request.getCampeonatoId());
@@ -61,7 +80,12 @@ public class RondaController {
         }
     }
 
-    // Ruta para eliminar una ronda por su ID
+    /**
+     * Elimina una ronda por su ID.
+     * 
+     * @param request Mapa que contiene el ID de la ronda a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteRonda(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");

@@ -26,17 +26,33 @@ public class ParticipacionRondaService {
     @Autowired
     private RondaRepository rondaRepository;
 
-    // Método para obtener una participación por su ID
+    /**
+     * Obtiene una participación por su ID.
+     * 
+     * @param id ID de la participación a buscar.
+     * @return La participación encontrada o null si no existe.
+     */
     public ParticipacionRonda getParticipacionById(Long id) {
         return participacionRondaRepository.findById(id).orElse(null);
     }
 
-    // Método para obtener todas las participaciones
+    /**
+     * Obtiene todas las participaciones.
+     * 
+     * @return Lista de todas las participaciones registradas.
+     */
     public List<ParticipacionRonda> getAllParticipaciones() {
         return participacionRondaRepository.findAll();
     }
 
-    // Método para crear una nueva participación en una ronda
+    /**
+     * Crea una nueva participación en una ronda.
+     * 
+     * @param usuarioId ID del usuario que participa.
+     * @param rondaId ID de la ronda en la que participa.
+     * @param resultado Resultado de la participación.
+     * @return true si la participación se creó correctamente, false si el usuario o la ronda no existen.
+     */
     public boolean createParticipacion(Long usuarioId, Long rondaId, Resultado resultado) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
         Optional<Ronda> rondaOpt = rondaRepository.findById(rondaId);
@@ -51,7 +67,15 @@ public class ParticipacionRondaService {
         return false; // Usuario o ronda no encontrados
     }
 
-    // Método para modificar una participación existente
+    /**
+     * Modifica una participación existente.
+     * 
+     * @param id ID de la participación a modificar.
+     * @param usuarioId Nuevo ID del usuario que participa.
+     * @param rondaId Nuevo ID de la ronda en la que participa.
+     * @param resultado Nuevo resultado de la participación.
+     * @return true si la participación se modificó correctamente, false si no se encontró.
+     */
     public boolean modifyParticipacion(Long id, Long usuarioId, Long rondaId, Resultado resultado) {
         Optional<ParticipacionRonda> participacionOpt = participacionRondaRepository.findById(id);
 
@@ -76,7 +100,12 @@ public class ParticipacionRondaService {
         return false; // Participación no encontrada
     }
 
-    // Método para eliminar una participación por su ID
+    /**
+     * Elimina una participación por su ID.
+     * 
+     * @param id ID de la participación a eliminar.
+     * @return true si la participación se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteParticipacion(Long id) {
         if (participacionRondaRepository.existsById(id)) {
             participacionRondaRepository.deleteById(id);

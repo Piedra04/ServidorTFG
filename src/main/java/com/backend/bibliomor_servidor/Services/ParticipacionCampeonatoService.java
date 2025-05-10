@@ -25,17 +25,32 @@ public class ParticipacionCampeonatoService {
     @Autowired
     private CampeonatoRepository campeonatoRepository;
 
-    // Método para obtener una participación por su ID
+    /**
+     * Obtiene una participación por su ID.
+     * 
+     * @param id ID de la participación a buscar.
+     * @return La participación encontrada o null si no existe.
+     */
     public ParticipacionCampeonato getParticipacionById(Long id) {
         return participacionCampeonatoRepository.findById(id).orElse(null);
     }
 
-    // Método para obtener todas las participaciones
+    /**
+     * Obtiene todas las participaciones.
+     * 
+     * @return Lista de todas las participaciones registradas.
+     */
     public List<ParticipacionCampeonato> getAllParticipaciones() {
         return participacionCampeonatoRepository.findAll();
     }
 
-    // Método para crear una nueva participación
+    /**
+     * Crea una nueva participación.
+     * 
+     * @param usuarioId ID del usuario que participa.
+     * @param campeonatoId ID del campeonato en el que participa.
+     * @return true si la participación se creó correctamente, false si el usuario o el campeonato no existen.
+     */
     public boolean createParticipacion(Long usuarioId, Long campeonatoId) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
         Optional<Campeonato> campeonatoOpt = campeonatoRepository.findById(campeonatoId);
@@ -48,7 +63,14 @@ public class ParticipacionCampeonatoService {
         return false; // Usuario o campeonato no encontrados
     }
 
-    // Método para modificar una participación existente
+    /**
+     * Modifica una participación existente.
+     * 
+     * @param id ID de la participación a modificar.
+     * @param usuarioId Nuevo ID del usuario que participa.
+     * @param campeonatoId Nuevo ID del campeonato en el que participa.
+     * @return true si la participación se modificó correctamente, false si no se encontró.
+     */
     public boolean modifyParticipacion(Long id, Long usuarioId, Long campeonatoId) {
         Optional<ParticipacionCampeonato> participacionOpt = participacionCampeonatoRepository.findById(id);
 
@@ -69,7 +91,12 @@ public class ParticipacionCampeonatoService {
         return false; // Participación no encontrada
     }
 
-    // Método para eliminar una participación por su ID
+    /**
+     * Elimina una participación por su ID.
+     * 
+     * @param id ID de la participación a eliminar.
+     * @return true si la participación se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteParticipacion(Long id) {
         if (participacionCampeonatoRepository.existsById(id)) {
             participacionCampeonatoRepository.deleteById(id);

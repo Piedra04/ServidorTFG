@@ -11,7 +11,6 @@ import com.backend.bibliomor_servidor.Repositories.JuegoRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CampeonatoService {
@@ -22,38 +21,63 @@ public class CampeonatoService {
     @Autowired
     private JuegoRepository juegoRepository;
 
-    // Método para obtener un campeonato por su ID
-    public Optional<Campeonato> getCampeonatoById(Long id) {
-        return campeonatoRepository.findById(id);
+    /**
+     * Obtiene un campeonato por su ID.
+     * 
+     * @param id ID del campeonato a buscar.
+     * @return Optional que contiene el campeonato si se encuentra, o vacío si no existe.
+     */
+    public Campeonato getCampeonatoById(Long id) {
+        return campeonatoRepository.findById(id).orElse(null);
     }
 
-    // Método para obtener todos los campeonatos
+    /**
+     * Obtiene todos los campeonatos.
+     * 
+     * @return Lista de todos los campeonatos registrados.
+     */
     public List<Campeonato> getAllCampeonatos() {
         return campeonatoRepository.findAll();
     }
 
-    // Método para crear un nuevo campeonato
+    /**
+     * Crea un nuevo campeonato.
+     * 
+     * @param fechaInicio Fecha de inicio del campeonato.
+     * @param fechaFin Fecha de finalización del campeonato.
+     * @param descripcion Descripción del campeonato.
+     * @param idJuego ID del juego asociado al campeonato.
+     * @param estado Estado del torneo.
+     * @return true si el campeonato se creó correctamente, false si no se encontró el juego.
+     */
     public boolean createCampeonato(LocalDate fechaInicio, LocalDate fechaFin, String descripcion, Long idJuego,
             EstadoTorneo estado) {
-        // Crear un nuevo campeonato
         if (juegoRepository.existsById(idJuego)) {
             Juego juego = juegoRepository.findById(idJuego).orElseThrow(() -> new RuntimeException("Juego no encontrado"));
 
-            Campeonato campeonato = new Campeonato(fechaInicio, fechaFin, descripcion,
-            juego, estado);
+            Campeonato campeonato = new Campeonato(fechaInicio, fechaFin, descripcion, juego, estado);
             campeonatoRepository.save(campeonato);
             return true;
         }
         return false; // No se encontró el juego
     }
 
-    // Método para modificar un campeonato existente
+    /**
+     * Modifica un campeonato existente.
+     * 
+     * @param id ID del campeonato a modificar.
+     * @param fechaInicio Nueva fecha de inicio del campeonato.
+     * @param fechaFin Nueva fecha de finalización del campeonato.
+     * @param descripcion Nueva descripción del campeonato.
+     * @param juegoId ID del juego asociado al campeonato.
+     * @param estado Nuevo estado del torneo.
+     * @return true si el campeonato se modificó correctamente, false si no se encontró.
+     */
     public boolean modifyCampeonato(Long id, LocalDate fechaInicio, LocalDate fechaFin, String descripcion,
             Long juegoId, EstadoTorneo estado) {
         if (campeonatoRepository.existsById(id)) {
             Campeonato campeonato = campeonatoRepository.findById(id).orElse(null);
             if (campeonato != null) {
-                // Actualizar solo si los campos no son null
                 if (fechaInicio != null) {
                     campeonato.setFechaInicio(fechaInicio);
                 }
@@ -73,7 +97,12 @@ public class CampeonatoService {
         return false; // No se encontró el campeonato
     }
 
-    // Método para eliminar un campeonato por su ID
+    /**
+     * Elimina un campeonato por su ID.
+     * 
+     * @param id ID del campeonato a eliminar.
+     * @return true si el campeonato se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteCampeonato(Long id) {
         if (campeonatoRepository.existsById(id)) {
             campeonatoRepository.deleteById(id);

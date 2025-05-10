@@ -17,7 +17,11 @@ public class JuegoController {
     @Autowired
     private JuegoService juegoService;
 
-    // Ruta para obtener todos los juegos
+    /**
+     * Obtiene todos los juegos.
+     * 
+     * @return ResponseEntity con la lista de juegos o un mensaje NOT_FOUND si no hay juegos.
+     */
     @GetMapping
     public ResponseEntity<?> getAllGames() {
         if (juegoService.getAllGames().isEmpty()) {
@@ -26,7 +30,12 @@ public class JuegoController {
         return ResponseEntity.status(HttpStatus.OK).body(juegoService.getAllGames());
     }
 
-    // Ruta para obtener un juego por su ID
+    /**
+     * Obtiene un juego por su ID.
+     * 
+     * @param id ID del juego a buscar.
+     * @return ResponseEntity con el juego encontrado o un mensaje NOT_FOUND si no existe.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getGameById(@PathVariable Long id) {
         if (juegoService.getGameById(id) == null) {
@@ -35,7 +44,12 @@ public class JuegoController {
         return ResponseEntity.status(HttpStatus.OK).body(juegoService.getGameById(id));
     }
 
-    // Ruta para crear un nuevo juego
+    /**
+     * Crea un nuevo juego.
+     * 
+     * @param gameRequest Objeto con los datos del juego a crear.
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping
     public ResponseEntity<?> createGame(@RequestBody JuegoRequest gameRequest) {
         boolean validar = juegoService.createGame(gameRequest.getNombre(), gameRequest.getnUnidades());
@@ -48,7 +62,12 @@ public class JuegoController {
         }
     }
 
-    // Ruta para modificar un juego existente
+    /**
+     * Modifica un juego existente.
+     * 
+     * @param gameRequest Objeto con los datos actualizados del juego.
+     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     */
     @PutMapping
     public ResponseEntity<?> modifyGame(@RequestBody JuegoRequest gameRequest) {
         boolean validar = juegoService.modifyGame(gameRequest.getId(), gameRequest.getNombre(), gameRequest.getnUnidades());
@@ -61,7 +80,12 @@ public class JuegoController {
         }
     }
 
-    // Ruta para eliminar un juego por su ID
+    /**
+     * Elimina un juego por su ID.
+     * 
+     * @param request Mapa que contiene el ID del juego a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteGame(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");

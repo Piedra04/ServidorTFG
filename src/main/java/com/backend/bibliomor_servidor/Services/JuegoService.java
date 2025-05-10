@@ -14,17 +14,32 @@ public class JuegoService {
     @Autowired
     private JuegoRepository juegoRepository;
 
-    // Método para obtener un juego por su ID
+    /**
+     * Obtiene un juego por su ID.
+     * 
+     * @param id ID del juego a buscar.
+     * @return El juego encontrado o null si no existe.
+     */
     public Juego getGameById(Long id) {
         return juegoRepository.findById(id).orElse(null);
     }
 
-    // Método para obtener todos los juegos
+    /**
+     * Obtiene todos los juegos.
+     * 
+     * @return Lista de todos los juegos registrados.
+     */
     public List<Juego> getAllGames() {
         return juegoRepository.findAll();
     }
 
-    // Método para crear un nuevo juego
+    /**
+     * Crea un nuevo juego.
+     * 
+     * @param nombre Nombre del juego a crear.
+     * @param nUnidades Número de unidades disponibles del juego.
+     * @return true si el juego se creó correctamente, false si el nombre ya está registrado.
+     */
     public boolean createGame(String nombre, int nUnidades) {
         if (juegoRepository.existsByNombre(nombre)) {
             return false; // El juego ya existe
@@ -35,7 +50,14 @@ public class JuegoService {
         }
     }
 
-    // Método para modificar un juego existente
+    /**
+     * Modifica un juego existente.
+     * 
+     * @param id ID del juego a modificar.
+     * @param nombre Nuevo nombre del juego.
+     * @param nUnidades Nuevo número de unidades disponibles.
+     * @return true si el juego se modificó correctamente, false si no se encontró o el nombre ya está registrado.
+     */
     public boolean modifyGame(Long id, String nombre, Integer nUnidades) {
         if (juegoRepository.existsById(id)) {
             Juego game = juegoRepository.findById(id).orElse(null);
@@ -59,7 +81,12 @@ public class JuegoService {
         return false; // No se encontró el juego
     }
 
-    // Método para eliminar un juego por su ID
+    /**
+     * Elimina un juego por su ID.
+     * 
+     * @param id ID del juego a eliminar.
+     * @return true si el juego se eliminó correctamente, false si no se encontró.
+     */
     public boolean deleteGame(Long id) {
         if (juegoRepository.existsById(id)) {
             juegoRepository.deleteById(id);

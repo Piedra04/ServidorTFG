@@ -9,7 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class PasswordHashService {
 
-    // Método para hashear una contraseña
+    /**
+     * Hashea una contraseña utilizando el algoritmo SHA-256.
+     * 
+     * @param password Contraseña en texto plano a hashear.
+     * @return La contraseña hasheada en formato Base64.
+     * @throws RuntimeException Si ocurre un error al hashear la contraseña.
+     */
     public String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -20,7 +26,13 @@ public class PasswordHashService {
         }
     }
 
-    // Método para verificar si una contraseña coincide con su hash
+    /**
+     * Verifica si una contraseña coincide con su hash.
+     * 
+     * @param password Contraseña en texto plano a verificar.
+     * @param hashedPassword Contraseña hasheada con la que se comparará.
+     * @return true si la contraseña coincide con el hash, false en caso contrario.
+     */
     public boolean verifyPassword(String password, String hashedPassword) {
         String hashedInput = hashPassword(password);
         return hashedInput.equals(hashedPassword);

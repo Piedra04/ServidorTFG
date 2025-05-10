@@ -17,7 +17,11 @@ public class ParticipacionRondaController {
     @Autowired
     private ParticipacionRondaService participacionRondaService;
 
-    // Ruta para obtener todas las participaciones
+    /**
+     * Obtiene todas las participaciones.
+     * 
+     * @return ResponseEntity con la lista de participaciones o un mensaje NOT_FOUND si no hay participaciones.
+     */
     @GetMapping
     public ResponseEntity<?> getAllParticipaciones() {
         if (participacionRondaService.getAllParticipaciones().isEmpty()) {
@@ -26,7 +30,12 @@ public class ParticipacionRondaController {
         return ResponseEntity.status(HttpStatus.OK).body(participacionRondaService.getAllParticipaciones());
     }
 
-    // Ruta para obtener una participación por su ID
+    /**
+     * Obtiene una participación por su ID.
+     * 
+     * @param id ID de la participación a buscar.
+     * @return ResponseEntity con la participación encontrada o un mensaje NOT_FOUND si no existe.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getParticipacionById(@PathVariable Long id) {
         if (participacionRondaService.getParticipacionById(id) == null) {
@@ -35,7 +44,12 @@ public class ParticipacionRondaController {
         return ResponseEntity.status(HttpStatus.OK).body(participacionRondaService.getParticipacionById(id));
     }
 
-    // Ruta para crear una nueva participación
+    /**
+     * Crea una nueva participación.
+     * 
+     * @param request Objeto con los datos de la participación a crear.
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     */
     @PostMapping
     public ResponseEntity<?> createParticipacion(@RequestBody ParticipacionRondaRequest request) {
         boolean validar = participacionRondaService.createParticipacion(
@@ -50,7 +64,12 @@ public class ParticipacionRondaController {
         }
     }
 
-    // Ruta para modificar una participación existente
+    /**
+     * Modifica una participación existente.
+     * 
+     * @param request Objeto con los datos actualizados de la participación.
+     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     */
     @PutMapping
     public ResponseEntity<?> modifyParticipacion(@RequestBody ParticipacionRondaRequest request) {
         boolean validar = participacionRondaService.modifyParticipacion(
@@ -65,7 +84,12 @@ public class ParticipacionRondaController {
         }
     }
 
-    // Ruta para eliminar una participación por su ID
+    /**
+     * Elimina una participación por su ID.
+     * 
+     * @param request Mapa que contiene el ID de la participación a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteParticipacion(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
