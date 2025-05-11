@@ -17,7 +17,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "usuarios")
@@ -41,7 +40,6 @@ public class Usuario {
     @Column(nullable = false)
     private String contraseña;
 
-    @Email
     @Column(nullable = false, unique = true, length = 50)
     private String correo;
 
