@@ -77,8 +77,7 @@ public class ReservaJuegoController {
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
     @DeleteMapping
-    public ResponseEntity<?> deleteReserva(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    public ResponseEntity<?> deleteReserva(@PathVariable Long id) {
         boolean validar = reservaJuegoService.deleteReserva(id);
 
         if (validar) {

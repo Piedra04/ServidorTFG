@@ -91,8 +91,7 @@ public class ParticipacionRondaController {
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
     @DeleteMapping
-    public ResponseEntity<?> deleteParticipacion(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    public ResponseEntity<?> deleteParticipacion(@PathVariable Long id) {
         boolean validar = participacionRondaService.deleteParticipacion(id);
 
         if (validar) {

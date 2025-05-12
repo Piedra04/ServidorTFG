@@ -105,9 +105,8 @@ public class LibroController {
      * @param request Mapa que contiene el ISBN del libro a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
-    @DeleteMapping
-    public ResponseEntity<?> deleteLibro(@RequestBody Map<String, String> request) {
-        String isbn = request.get("isbn");
+    @DeleteMapping("/{isbn}")
+    public ResponseEntity<?> deleteLibro(@PathVariable String isbn) {
         boolean validar = libroService.deleteLibro(isbn);
 
         if (validar) {

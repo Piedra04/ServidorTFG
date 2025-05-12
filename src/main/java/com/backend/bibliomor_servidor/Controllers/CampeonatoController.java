@@ -106,11 +106,9 @@ public class CampeonatoController {
      * @param request Mapa que contiene el ID del campeonato a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
-    @DeleteMapping
-    public ResponseEntity<?> deleteCampeonato(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCampeonato(@PathVariable Long id) {
         boolean validar = campeonatoService.deleteCampeonato(id);
-
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Campeonato eliminado correctamente"));
         } else {

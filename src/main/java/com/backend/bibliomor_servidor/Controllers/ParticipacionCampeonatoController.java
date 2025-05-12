@@ -86,9 +86,8 @@ public class ParticipacionCampeonatoController {
      * @param request Mapa que contiene el ID de la participación a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
-    @DeleteMapping
-    public ResponseEntity<?> deleteParticipacion(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteParticipacion(@PathVariable Long id) {
         boolean validar = participacionCampeonatoService.deleteParticipacion(id);
 
         if (validar) {

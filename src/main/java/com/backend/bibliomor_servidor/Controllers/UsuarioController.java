@@ -54,7 +54,7 @@ public class UsuarioController {
      * @return ResponseEntity con el usuario encontrado o un mensaje NOT_FOUND si no existe.
      */
     @GetMapping("/id/{id}")
-    public ResponseEntity<?> getUserById(@RequestBody Long id) {
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
         if (usuarioService.getUserById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el usuario"));
         }
@@ -160,10 +160,9 @@ public class UsuarioController {
      * @param request Mapa que contiene el correo del usuario a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
-    @DeleteMapping
-    public ResponseEntity<?> deleteUser(@RequestBody Map<String, String> request) {
-        String correo = request.get("correo");
-        boolean validar = usuarioService.deleteUser(correo);
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        boolean validar = usuarioService.deleteUser(id);
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Usuario eliminado correctamente"));

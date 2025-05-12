@@ -97,10 +97,9 @@ public class UsuarioService {
      * @param correo Correo del usuario a eliminar.
      * @return true si el usuario se eliminó correctamente, false si no se encontró.
      */
-    public boolean deleteUser(String correo) {
-        if (usuarioRepository.existsByCorreo(correo)) {
-            Usuario user = usuarioRepository.findByCorreo(correo);
-            usuarioRepository.delete(user);
+    public boolean deleteUser(Long id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
             return true;
         } else {
             return false;

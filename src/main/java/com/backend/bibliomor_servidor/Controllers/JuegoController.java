@@ -86,9 +86,8 @@ public class JuegoController {
      * @param request Mapa que contiene el ID del juego a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
-    @DeleteMapping
-    public ResponseEntity<?> deleteGame(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteGame(@PathVariable Long id) {
         boolean validar = juegoService.deleteGame(id);
 
         if (validar) {

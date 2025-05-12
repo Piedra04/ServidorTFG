@@ -76,9 +76,8 @@ public class ReservaLibroController {
      * @param request Mapa que contiene el ID de la reserva a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
-    @DeleteMapping
-    public ResponseEntity<?> deleteReserva(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReserva(@PathVariable Long id) {
         boolean validar = reservaLibroService.deleteReserva(id);
 
         if (validar) {

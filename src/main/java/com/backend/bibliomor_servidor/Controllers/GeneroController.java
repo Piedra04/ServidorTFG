@@ -86,9 +86,8 @@ public class GeneroController {
      * @param request Mapa que contiene el ID del género a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
-    @DeleteMapping
-    public ResponseEntity<?> deleteGenero(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteGenero(@PathVariable Long id) {
         boolean validar = generoService.deleteGenero(id);
 
         if (validar) {

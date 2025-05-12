@@ -86,9 +86,8 @@ public class RondaController {
      * @param request Mapa que contiene el ID de la ronda a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
-    @DeleteMapping
-    public ResponseEntity<?> deleteRonda(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRonda(@PathVariable Long id) {
         boolean validar = rondaService.deleteRonda(id);
 
         if (validar) {
