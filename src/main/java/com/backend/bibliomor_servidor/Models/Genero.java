@@ -11,6 +11,8 @@ import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "generos")
 public class Genero {
@@ -26,6 +28,7 @@ public class Genero {
 
     // Relación ManyToMany con la entidad Libro
     @ManyToMany(mappedBy = "generos")
+    @JsonIgnore
     private Set<Libro> libros = new HashSet<>();
 
     // Constructor vacío

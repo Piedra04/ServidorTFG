@@ -155,9 +155,9 @@ public class UsuarioController {
     }
 
     /**
-     * Elimina un usuario por su correo.
+     * Elimina un usuario por su id.
      * 
-     * @param request Mapa que contiene el correo del usuario a eliminar.
+     * @param request Mapa que contiene el id del usuario a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
     @DeleteMapping("{id}")
