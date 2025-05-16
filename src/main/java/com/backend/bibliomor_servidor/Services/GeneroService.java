@@ -16,7 +16,7 @@ public class GeneroService {
 
     /**
      * Obtiene un género por su ID.
-     * 
+     *
      * @param id ID del género a buscar.
      * @return El género encontrado o null si no existe.
      */
@@ -26,7 +26,7 @@ public class GeneroService {
 
     /**
      * Obtiene todos los géneros.
-     * 
+     *
      * @return Lista de todos los géneros registrados.
      */
     public List<Genero> getAllGeneros() {
@@ -35,9 +35,10 @@ public class GeneroService {
 
     /**
      * Crea un nuevo género.
-     * 
+     *
      * @param nombre Nombre del género a crear.
-     * @return true si el género se creó correctamente, false si el nombre es inválido o ya existe.
+     * @return true si el género se creó correctamente, false si el nombre es
+     *         inválido o ya existe.
      */
     public boolean createGenero(String nombre) {
         if (nombre == null || nombre.trim().isEmpty() || generoRepository.existsByNombre(nombre)) {
@@ -52,10 +53,11 @@ public class GeneroService {
 
     /**
      * Modifica un género existente.
-     * 
-     * @param id ID del género a modificar.
+     *
+     * @param id     ID del género a modificar.
      * @param nombre Nuevo nombre del género.
-     * @return true si el género se modificó correctamente, false si no se encontró o el nombre ya está registrado.
+     * @return true si el género se modificó correctamente, false si no se encontró
+     *         o el nombre ya está registrado.
      */
     public boolean modifyGenero(Long id, String nombre) {
         if (id == null || nombre == null || nombre.trim().isEmpty()) {
@@ -66,7 +68,8 @@ public class GeneroService {
             return false;
         }
         // Verificar si el nuevo nombre ya está registrado
-        if (generoRepository.existsByNombre(nombre) && !generoRepository.findById(id).get().getNombre().equals(nombre)) {
+        if (generoRepository.existsByNombre(nombre)
+                && !generoRepository.findById(id).get().getNombre().equals(nombre)) {
             return false;
         }
 
@@ -80,7 +83,7 @@ public class GeneroService {
 
     /**
      * Elimina un género por su ID.
-     * 
+     *
      * @param id ID del género a eliminar.
      * @return true si el género se eliminó correctamente, false si no se encontró.
      */

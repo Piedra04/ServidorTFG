@@ -7,8 +7,6 @@ import com.backend.bibliomor_servidor.Models.ReservaLibro;
 import com.backend.bibliomor_servidor.Models.Libro;
 import com.backend.bibliomor_servidor.Models.Usuario;
 import com.backend.bibliomor_servidor.Repositories.ReservaLibroRepository;
-import com.backend.bibliomor_servidor.Repositories.LibroRepository;
-import com.backend.bibliomor_servidor.Repositories.UsuarioRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,12 +17,6 @@ public class ReservaLibroService {
 
     @Autowired
     private ReservaLibroRepository reservaLibroRepository;
-
-    @Autowired
-    private LibroRepository libroRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     /**
      * Obtiene una reserva por su ID.
@@ -47,21 +39,19 @@ public class ReservaLibroService {
 
     /**
      * Crea una nueva reserva de libro.
-     * 
+     *
      * @param fechaAdquisicion Fecha de adquisición del libro.
-     * @param fechaDevolucion Fecha de devolución del libro.
-     * @param libroId ID del libro a reservar.
-     * @param usuarioId ID del usuario que realiza la reserva.
-     * @return true si la reserva se creó correctamente, false si el libro o el usuario no existen.
+     * @param fechaDevolucion  Fecha de devolución del libro.
+     * @param libro            Libro a reservar.
+     * @param usuario          Usuario que realiza la reserva.
+     * @return true si la reserva se creó correctamente, false si el libro o el
+     *         usuario no existen.
      */
-    public boolean createReserva(LocalDate fechaAdquisicion, LocalDate fechaDevolucion, String libroId, Long usuarioId) {
-        Optional<Libro> libroOpt = libroRepository.findById(libroId);
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
+    public boolean createReserva(LocalDate fechaAdquisicion, LocalDate fechaDevolucion, Libro libro, Usuario usuario) {
 
-        if (libroOpt.isPresent() && usuarioOpt.isPresent()) {
+        if (libro != null && usuario != null) {
             ReservaLibro reserva = new ReservaLibro(
-                fechaAdquisicion, fechaDevolucion, libroOpt.get(), usuarioOpt.get()
-            );
+                    fechaAdquisicion, fechaDevolucion, libro, usuario);
             reservaLibroRepository.save(reserva);
             return true;
         }
@@ -70,15 +60,17 @@ public class ReservaLibroService {
 
     /**
      * Modifica una reserva existente.
-     * 
-     * @param id ID de la reserva a modificar.
+     *
+     * @param id               ID de la reserva a modificar.
      * @param fechaAdquisicion Nueva fecha de adquisición del libro.
-     * @param fechaDevolucion Nueva fecha de devolución del libro.
-     * @param libroId Nuevo ID del libro a reservar.
-     * @param usuarioId Nuevo ID del usuario que realiza la reserva.
-     * @return true si la reserva se modificó correctamente, false si no se encontró.
+     * @param fechaDevolucion  Nueva fecha de devolución del libro.
+     * @param libro            Nuevo libro a reservar.
+     * @param usuario          Nuevo usuario que realiza la reserva.
+     * @return true si la reserva se modificó correctamente, false si no se
+     *         encontró.
      */
-    public boolean modifyReserva(Long id, LocalDate fechaAdquisicion, LocalDate fechaDevolucion, String libroId, Long usuarioId) {
+    public boolean modifyReserva(Long id, LocalDate fechaAdquisicion, LocalDate fechaDevolucion, Libro libro,
+            Usuario usuario) {
         Optional<ReservaLibro> reservaOpt = reservaLibroRepository.findById(id);
 
         if (reservaOpt.isPresent()) {
@@ -92,12 +84,12 @@ public class ReservaLibroService {
                 reserva.setFechaDevolucion(fechaDevolucion);
             }
 
-            if (libroId != null) {
-                libroRepository.findById(libroId).ifPresent(reserva::setLibro);
+            if (libro != null) {
+                reserva.setLibro(libro);
             }
 
-            if (usuarioId != null) {
-                usuarioRepository.findById(usuarioId).ifPresent(reserva::setUsuario);
+            if (usuario != null) {
+                reserva.setUsuario(usuario);
             }
 
             reservaLibroRepository.save(reserva);
@@ -108,7 +100,7 @@ public class ReservaLibroService {
 
     /**
      * Elimina una reserva por su ID.
-     * 
+     *
      * @param id ID de la reserva a eliminar.
      * @return true si la reserva se eliminó correctamente, false si no se encontró.
      */

@@ -6,6 +6,7 @@ import com.backend.bibliomor_servidor.Enum.Rol;
 
 // Clase que representa el objeto tanto para crear como editar un usuario por parte del administrador
 public class UsuarioRequest {
+    
     private String correo;
     private String nombre;
     private String apellidos;

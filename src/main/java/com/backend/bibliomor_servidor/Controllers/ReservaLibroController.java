@@ -20,7 +20,8 @@ public class ReservaLibroController {
     /**
      * Obtiene todas las reservas de libros.
      * 
-     * @return ResponseEntity con la lista de reservas o un mensaje NOT_FOUND si no hay reservas.
+     * @return ResponseEntity con la lista de reservas o un mensaje NOT_FOUND si no
+     *         hay reservas.
      */
     @GetMapping
     public ResponseEntity<?> getAllReservas() {
@@ -32,15 +33,16 @@ public class ReservaLibroController {
 
     /**
      * Crea una nueva reserva de libro.
-     * 
-     * @param request Objeto con los datos de la reserva a crear.
-     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     *
+     * @param request Objeto con los datos de la reserva a crear (fechaAdquisicion,
+     *                fechaDevolucion, libro, usuario).
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o
+     *         BAD_REQUEST si falló.
      */
     @PostMapping
     public ResponseEntity<?> createReserva(@RequestBody ReservaLibroRequest request) {
         boolean validar = reservaLibroService.createReserva(
-            request.getFechaAdquisicion(), request.getFechaDevolucion(), request.getLibroId(), request.getUsuarioId()
-        );
+                request.getFechaAdquisicion(), request.getFechaDevolucion(), request.getLibro(), request.getUsuario());
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Reserva creada correctamente"));
@@ -52,15 +54,18 @@ public class ReservaLibroController {
 
     /**
      * Modifica una reserva existente.
-     * 
-     * @param request Objeto con los datos actualizados de la reserva.
-     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     *
+     * @param id      ID de la reserva a modificar.
+     * @param request Objeto con los datos actualizados de la reserva
+     *                (fechaAdquisicion, fechaDevolucion, libro, usuario).
+     * @return ResponseEntity con estado OK si se modificó correctamente, o
+     *         NOT_FOUND si no existe.
      */
     @PutMapping("/{id}")
     public ResponseEntity<?> modifyReserva(@PathVariable long id, @RequestBody ReservaLibroRequest request) {
         boolean validar = reservaLibroService.modifyReserva(
-           id, request.getFechaAdquisicion(), request.getFechaDevolucion(), request.getLibroId(), request.getUsuarioId()
-        );
+                id, request.getFechaAdquisicion(), request.getFechaDevolucion(), request.getLibro(),
+                request.getUsuario());
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Reserva modificada correctamente"));
@@ -72,9 +77,10 @@ public class ReservaLibroController {
 
     /**
      * Elimina una reserva por su ID.
-     * 
-     * @param request Mapa que contiene el ID de la reserva a eliminar.
-     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     *
+     * @param id ID de la reserva a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND
+     *         si no existe.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteReserva(@PathVariable Long id) {

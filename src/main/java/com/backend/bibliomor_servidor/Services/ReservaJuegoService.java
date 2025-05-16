@@ -8,8 +8,6 @@ import com.backend.bibliomor_servidor.Enum.Recreo;
 import com.backend.bibliomor_servidor.Models.Juego;
 import com.backend.bibliomor_servidor.Models.Usuario;
 import com.backend.bibliomor_servidor.Repositories.ReservaJuegoRepository;
-import com.backend.bibliomor_servidor.Repositories.JuegoRepository;
-import com.backend.bibliomor_servidor.Repositories.UsuarioRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,12 +18,6 @@ public class ReservaJuegoService {
 
     @Autowired
     private ReservaJuegoRepository reservaJuegoRepository;
-
-    @Autowired
-    private JuegoRepository juegoRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     /**
      * Obtiene una reserva por su ID.
@@ -48,21 +40,19 @@ public class ReservaJuegoService {
 
     /**
      * Crea una nueva reserva de juego.
-     * 
-     * @param fecha Fecha de la reserva.
-     * @param recreo Recreo en el que se realizará la reserva.
-     * @param juegoId ID del juego a reservar.
-     * @param usuarioId ID del usuario que realiza la reserva.
-     * @return true si la reserva se creó correctamente, false si el juego o el usuario no existen.
+     *
+     * @param fecha   Fecha de la reserva.
+     * @param recreo  Recreo en el que se realizará la reserva.
+     * @param juego   Juego a reservar.
+     * @param usuario Usuario que realiza la reserva.
+     * @return true si la reserva se creó correctamente, false si el juego o el
+     *         usuario no existen.
      */
-    public boolean createReserva(LocalDate fecha, Recreo recreo, Long juegoId, Long usuarioId) {
-        Optional<Juego> juegoOpt = juegoRepository.findById(juegoId);
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
+    public boolean createReserva(LocalDate fecha, Recreo recreo, Juego juego, Usuario usuario) {
 
-        if (juegoOpt.isPresent() && usuarioOpt.isPresent()) {
+        if (juego != null && usuario != null) {
             ReservaJuego reserva = new ReservaJuego(
-                fecha, recreo, juegoOpt.get(), usuarioOpt.get()
-            );
+                    fecha, recreo, juego, usuario);
             reservaJuegoRepository.save(reserva);
             return true;
         }
@@ -71,15 +61,16 @@ public class ReservaJuegoService {
 
     /**
      * Modifica una reserva existente.
-     * 
-     * @param id ID de la reserva a modificar.
-     * @param fecha Nueva fecha de la reserva.
-     * @param recreo Nuevo recreo de la reserva.
-     * @param juegoId Nuevo ID del juego a reservar.
-     * @param usuarioId Nuevo ID del usuario que realiza la reserva.
-     * @return true si la reserva se modificó correctamente, false si no se encontró.
+     *
+     * @param id      ID de la reserva a modificar.
+     * @param fecha   Nueva fecha de la reserva.
+     * @param recreo  Nuevo recreo de la reserva.
+     * @param juego   Nuevo juego a reservar.
+     * @param usuario Nuevo usuario que realiza la reserva.
+     * @return true si la reserva se modificó correctamente, false si no se
+     *         encontró.
      */
-    public boolean modifyReserva(Long id, LocalDate fecha, Recreo recreo, Long juegoId, Long usuarioId) {
+    public boolean modifyReserva(Long id, LocalDate fecha, Recreo recreo, Juego juego, Usuario usuario) {
         Optional<ReservaJuego> reservaOpt = reservaJuegoRepository.findById(id);
 
         if (reservaOpt.isPresent()) {
@@ -93,12 +84,12 @@ public class ReservaJuegoService {
                 reserva.setRecreo(recreo);
             }
 
-            if (juegoId != null) {
-                juegoRepository.findById(juegoId).ifPresent(reserva::setJuego);
+            if (juego != null) {
+                reserva.setJuego(juego);
             }
 
-            if (usuarioId != null) {
-                usuarioRepository.findById(usuarioId).ifPresent(reserva::setUsuario);
+            if (usuario != null) {
+                reserva.setUsuario(usuario);
             }
 
             reservaJuegoRepository.save(reserva);
@@ -109,7 +100,7 @@ public class ReservaJuegoService {
 
     /**
      * Elimina una reserva por su ID.
-     * 
+     *
      * @param id ID de la reserva a eliminar.
      * @return true si la reserva se eliminó correctamente, false si no se encontró.
      */

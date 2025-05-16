@@ -2,12 +2,14 @@ package com.backend.bibliomor_servidor.DTOs;
 
 import java.time.LocalDate;
 
+import com.backend.bibliomor_servidor.Models.Campeonato;
+
 
 public class RondaRequest {
 
     private int nRonda;
     private LocalDate fecha;
-    private Long campeonatoId; // ID del campeonato asociado
+    private Campeonato campeonato;
 
     // Getters y Setters
     public int getnRonda() {
@@ -26,11 +28,11 @@ public class RondaRequest {
         this.fecha = fecha;
     }
 
-    public Long getCampeonatoId() {
-        return campeonatoId;
+    public Campeonato getCampeonato() {
+        return campeonato;
     }
 
-    public void setCampeonatoId(Long campeonatoId) {
-        this.campeonatoId = campeonatoId;
+    public void setCampeonato(Campeonato campeonato) {
+        this.campeonato = campeonato;
     }
 }

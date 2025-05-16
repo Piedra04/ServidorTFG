@@ -8,8 +8,6 @@ import com.backend.bibliomor_servidor.Models.ParticipacionRonda;
 import com.backend.bibliomor_servidor.Models.Usuario;
 import com.backend.bibliomor_servidor.Models.Ronda;
 import com.backend.bibliomor_servidor.Repositories.ParticipacionRondaRepository;
-import com.backend.bibliomor_servidor.Repositories.UsuarioRepository;
-import com.backend.bibliomor_servidor.Repositories.RondaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +17,6 @@ public class ParticipacionRondaService {
 
     @Autowired
     private ParticipacionRondaRepository participacionRondaRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private RondaRepository rondaRepository;
 
     /**
      * Obtiene una participación por su ID.
@@ -47,20 +39,17 @@ public class ParticipacionRondaService {
 
     /**
      * Crea una nueva participación en una ronda.
-     * 
-     * @param usuarioId ID del usuario que participa.
-     * @param rondaId ID de la ronda en la que participa.
+     *
+     * @param usuario   Usuario que participa.
+     * @param ronda     Ronda en la que participa.
      * @param resultado Resultado de la participación.
-     * @return true si la participación se creó correctamente, false si el usuario o la ronda no existen.
+     * @return true si la participación se creó correctamente, false si el usuario o
+     *         la ronda no existen.
      */
-    public boolean createParticipacion(Long usuarioId, Long rondaId, Resultado resultado) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
-        Optional<Ronda> rondaOpt = rondaRepository.findById(rondaId);
+    public boolean createParticipacion(Usuario usuario, Ronda ronda, Resultado resultado) {
 
-        if (usuarioOpt.isPresent() && rondaOpt.isPresent()) {
-            ParticipacionRonda participacion = new ParticipacionRonda(
-                resultado, usuarioOpt.get(), rondaOpt.get()
-            );
+        if (usuario != null && ronda != null) {
+            ParticipacionRonda participacion = new ParticipacionRonda(resultado, usuario, ronda);
             participacionRondaRepository.save(participacion);
             return true;
         }
@@ -69,25 +58,26 @@ public class ParticipacionRondaService {
 
     /**
      * Modifica una participación existente.
-     * 
-     * @param id ID de la participación a modificar.
-     * @param usuarioId Nuevo ID del usuario que participa.
-     * @param rondaId Nuevo ID de la ronda en la que participa.
+     *
+     * @param id        ID de la participación a modificar.
+     * @param usuario   Nuevo usuario que participa.
+     * @param ronda     Nueva ronda en la que participa.
      * @param resultado Nuevo resultado de la participación.
-     * @return true si la participación se modificó correctamente, false si no se encontró.
+     * @return true si la participación se modificó correctamente, false si no se
+     *         encontró.
      */
-    public boolean modifyParticipacion(Long id, Long usuarioId, Long rondaId, Resultado resultado) {
+    public boolean modifyParticipacion(Long id, Usuario usuario, Ronda ronda, Resultado resultado) {
         Optional<ParticipacionRonda> participacionOpt = participacionRondaRepository.findById(id);
 
         if (participacionOpt.isPresent()) {
             ParticipacionRonda participacion = participacionOpt.get();
 
-            if (usuarioId != null) {
-                usuarioRepository.findById(usuarioId).ifPresent(participacion::setUsuario);
+            if (usuario != null) {
+                participacion.setUsuario(usuario);
             }
 
-            if (rondaId != null) {
-                rondaRepository.findById(rondaId).ifPresent(participacion::setRonda);
+            if (ronda != null) {
+                participacion.setRonda(ronda);
             }
 
             if (resultado != null) {
@@ -102,9 +92,10 @@ public class ParticipacionRondaService {
 
     /**
      * Elimina una participación por su ID.
-     * 
+     *
      * @param id ID de la participación a eliminar.
-     * @return true si la participación se eliminó correctamente, false si no se encontró.
+     * @return true si la participación se eliminó correctamente, false si no se
+     *         encontró.
      */
     public boolean deleteParticipacion(Long id) {
         if (participacionRondaRepository.existsById(id)) {

@@ -1,25 +1,28 @@
 package com.backend.bibliomor_servidor.DTOs;
 
+import com.backend.bibliomor_servidor.Models.Campeonato;
+import com.backend.bibliomor_servidor.Models.Usuario;
+
 public class ParticipacionCampeonatoRequest {
 
 
-    private Long usuarioId; // ID del usuario participante
-    private Long campeonatoId; // ID del campeonato
+    private Usuario usuario;
+    private Campeonato campeonato;
 
     // Getters y Setters
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Long getCampeonatoId() {
-        return campeonatoId;
+    public Campeonato getCampeonato() {
+        return campeonato;
     }
 
-    public void setCampeonatoId(Long campeonatoId) {
-        this.campeonatoId = campeonatoId;
+    public void setCampeonato(Campeonato campeonato) {
+        this.campeonato = campeonato;
     }
 }

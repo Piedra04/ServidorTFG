@@ -15,7 +15,7 @@ public class LibroRequest {
     private int unidadesTotales;
     private int unidadesDisponibles;
     private EstadoLibro estado;
-    private List<Genero> generos; // IDs de los géneros asociados
+    private List<Genero> generos;
 
     // Getters y Setters
     public String getIsbn() {

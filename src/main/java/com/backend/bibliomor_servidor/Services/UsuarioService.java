@@ -51,13 +51,14 @@ public class UsuarioService {
     /**
      * Registra un nuevo usuario.
      * 
-     * @param nombre Nombre del usuario.
-     * @param apellidos Apellidos del usuario.
+     * @param nombre          Nombre del usuario.
+     * @param apellidos       Apellidos del usuario.
      * @param fechaNacimiento Fecha de nacimiento del usuario.
-     * @param correo Correo del usuario.
-     * @param contrasena Contraseña del usuario.
-     * @param curso Curso asociado al usuario.
-     * @return true si el usuario se registró correctamente, false si el correo ya está registrado.
+     * @param correo          Correo del usuario.
+     * @param contrasena      Contraseña del usuario.
+     * @param curso           Curso asociado al usuario.
+     * @return true si el usuario se registró correctamente, false si el correo ya
+     *         está registrado.
      */
     public boolean registerUser(String nombre, String apellidos, LocalDate fechaNacimiento, String correo,
             String contrasena, String curso) {
@@ -69,7 +70,8 @@ public class UsuarioService {
 
             Rol rol = (curso == null || curso.trim().isEmpty()) ? Rol.PROFESOR : Rol.ALUMNO;
 
-            Usuario newUser = new Usuario(nombre, apellidos, fechaNacimiento, hashedPassword, correo, rol, curso, fechaNacimiento);
+            Usuario newUser = new Usuario(nombre, apellidos, fechaNacimiento, hashedPassword, correo, rol, curso,
+                    fechaNacimiento);
             usuarioRepository.save(newUser);
             return true;
         }
@@ -78,7 +80,7 @@ public class UsuarioService {
     /**
      * Verifica las credenciales del usuario.
      * 
-     * @param correo Correo del usuario.
+     * @param correo     Correo del usuario.
      * @param contrasena Contraseña en texto plano.
      * @return true si las credenciales son correctas, false en caso contrario.
      */
@@ -108,15 +110,17 @@ public class UsuarioService {
 
     /**
      * Modifica un usuario existente.
-     * 
-     * @param correo Correo del usuario a modificar.
-     * @param nombre Nuevo nombre del usuario.
-     * @param apellidos Nuevos apellidos del usuario.
+     *
+     * @param id              ID del usuario a modificar.
+     * @param correo          Nuevo correo del usuario.
+     * @param nombre          Nuevo nombre del usuario.
+     * @param apellidos       Nuevos apellidos del usuario.
      * @param fechaNacimiento Nueva fecha de nacimiento del usuario.
-     * @param contrasena Nueva contraseña del usuario.
-     * @param curso Nuevo curso asociado al usuario.
-     * @param rol Nuevo rol del usuario.
-     * @return true si el usuario se modificó correctamente, false si no se encontró.
+     * @param contrasena      Nueva contraseña del usuario.
+     * @param curso           Nuevo curso asociado al usuario.
+     * @param rol             Nuevo rol del usuario.
+     * @return true si el usuario se modificó correctamente, false si no se
+     *         encontró.
      */
     public boolean modifyUser(long id, String correo, String nombre, String apellidos, LocalDate fechaNacimiento,
             String contrasena, String curso, Rol rol) {
@@ -153,15 +157,16 @@ public class UsuarioService {
 
     /**
      * Crea un usuario manualmente (sin registro).
-     * 
-     * @param nombre Nombre del usuario.
-     * @param apellidos Apellidos del usuario.
+     *
+     * @param nombre          Nombre del usuario.
+     * @param apellidos       Apellidos del usuario.
      * @param fechaNacimiento Fecha de nacimiento del usuario.
-     * @param correo Correo del usuario.
-     * @param contrasena Contraseña del usuario.
-     * @param curso Curso asociado al usuario.
-     * @param rol Rol del usuario.
-     * @return true si el usuario se creó correctamente, false si el correo ya está registrado.
+     * @param correo          Correo del usuario.
+     * @param contrasena      Contraseña del usuario.
+     * @param curso           Curso asociado al usuario.
+     * @param rol             Rol del usuario.
+     * @return true si el usuario se creó correctamente, false si el correo ya está
+     *         registrado.
      */
     public boolean createUser(String nombre, String apellidos, LocalDate fechaNacimiento, String correo,
             String contrasena, String curso, Rol rol) {
@@ -170,7 +175,8 @@ public class UsuarioService {
         } else {
             String hashedPassword = passwordHashService.hashPassword(contrasena);
 
-            Usuario newUser = new Usuario(nombre, apellidos, fechaNacimiento, hashedPassword, correo, rol, curso, fechaNacimiento);
+            Usuario newUser = new Usuario(nombre, apellidos, fechaNacimiento, hashedPassword, correo, rol, curso,
+                    fechaNacimiento);
             usuarioRepository.save(newUser);
             return true;
         }

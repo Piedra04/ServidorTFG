@@ -2,12 +2,15 @@ package com.backend.bibliomor_servidor.DTOs;
 
 import java.time.LocalDate;
 
+import com.backend.bibliomor_servidor.Models.Libro;
+import com.backend.bibliomor_servidor.Models.Usuario;
+
 public class ReservaLibroRequest {
 
     private LocalDate fechaAdquisicion;
-    private LocalDate fechaDevolucion; // Puede ser null si no se ha devuelto
-    private String libroId; // ID del libro reservado
-    private Long usuarioId; // ID del usuario que realiza la reserva
+    private LocalDate fechaDevolucion; 
+    private Libro libro;
+    private Usuario usuario; 
 
     // Getters y Setters
     public LocalDate getFechaAdquisicion() {
@@ -26,19 +29,19 @@ public class ReservaLibroRequest {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    public String getLibroId() {
-        return libroId;
+    public Libro getLibro() {
+        return libro;
     }
 
-    public void setLibroId(String libroId) {
-        this.libroId = libroId;
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

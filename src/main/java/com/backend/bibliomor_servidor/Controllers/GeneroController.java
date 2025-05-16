@@ -19,8 +19,9 @@ public class GeneroController {
 
     /**
      * Obtiene todos los géneros.
-     * 
-     * @return ResponseEntity con la lista de géneros o un mensaje NOT_FOUND si no hay géneros.
+     *
+     * @return ResponseEntity con la lista de géneros o un mensaje NOT_FOUND si no
+     *         hay géneros.
      */
     @GetMapping
     public ResponseEntity<?> getAllGeneros() {
@@ -32,9 +33,10 @@ public class GeneroController {
 
     /**
      * Obtiene un género por su ID.
-     * 
+     *
      * @param id ID del género a buscar.
-     * @return ResponseEntity con el género encontrado o un mensaje NOT_FOUND si no existe.
+     * @return ResponseEntity con el género encontrado o un mensaje NOT_FOUND si no
+     *         existe.
      */
     @GetMapping("/{id}")
     public ResponseEntity<?> getGeneroById(@PathVariable Long id) {
@@ -46,9 +48,10 @@ public class GeneroController {
 
     /**
      * Crea un nuevo género.
-     * 
-     * @param generoRequest Objeto con los datos del género a crear.
-     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     *
+     * @param generoRequest Objeto con los datos del género a crear (nombre).
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o
+     *         BAD_REQUEST si falló.
      */
     @PostMapping
     public ResponseEntity<?> createGenero(@RequestBody GeneroRequest generoRequest) {
@@ -64,12 +67,14 @@ public class GeneroController {
 
     /**
      * Modifica un género existente.
-     * 
-     * @param generoRequest Objeto con los datos actualizados del género.
-     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     *
+     * @param id            ID del género a modificar.
+     * @param generoRequest Objeto con los datos actualizados del género (nombre).
+     * @return ResponseEntity con estado OK si se modificó correctamente, o
+     *         NOT_FOUND si no existe.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<?> modifyGenero(@PathVariable long id ,@RequestBody GeneroRequest generoRequest) {
+    public ResponseEntity<?> modifyGenero(@PathVariable long id, @RequestBody GeneroRequest generoRequest) {
         boolean validar = generoService.modifyGenero(id, generoRequest.getNombre());
 
         if (validar) {
@@ -82,9 +87,10 @@ public class GeneroController {
 
     /**
      * Elimina un género por su ID.
-     * 
-     * @param request Mapa que contiene el ID del género a eliminar.
-     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     *
+     * @param id ID del género a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND
+     *         si no existe.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteGenero(@PathVariable Long id) {

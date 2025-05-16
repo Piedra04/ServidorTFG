@@ -1,12 +1,14 @@
 package com.backend.bibliomor_servidor.DTOs;
 
 import com.backend.bibliomor_servidor.Enum.Resultado;
+import com.backend.bibliomor_servidor.Models.Ronda;
+import com.backend.bibliomor_servidor.Models.Usuario;
 
 public class ParticipacionRondaRequest {
 
-    private Resultado resultado; // Resultado de la participación
-    private Long usuarioId; // ID del usuario participante
-    private Long rondaId; // ID de la ronda
+    private Resultado resultado; 
+    private Usuario usuario; 
+    private Ronda ronda; 
 
     // Getters y Setters
     public Resultado getResultado() {
@@ -17,19 +19,19 @@ public class ParticipacionRondaRequest {
         this.resultado = resultado;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Long getRondaId() {
-        return rondaId;
+    public Ronda getRonda() {
+        return ronda;
     }
 
-    public void setRondaId(Long rondaId) {
-        this.rondaId = rondaId;
+    public void setRonda(Ronda ronda) {
+        this.ronda = ronda;
     }
 }

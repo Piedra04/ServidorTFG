@@ -3,13 +3,16 @@ package com.backend.bibliomor_servidor.DTOs;
 import java.time.LocalDate;
 
 import com.backend.bibliomor_servidor.Enum.EstadoTorneo;
+import com.backend.bibliomor_servidor.Models.Juego;
+import com.backend.bibliomor_servidor.Models.Usuario;
 
 public class CampeonatoRequest {
 
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String descripcion;
-    private Long juego;
+    private Juego juego;
+    private Usuario ganador;
     private EstadoTorneo estado;
 
     // Getters y Setters
@@ -38,12 +41,20 @@ public class CampeonatoRequest {
         this.descripcion = descripcion;
     }
 
-    public Long getJuego() {
+    public Juego getJuego() {
         return juego;
     }
 
-    public void setJuego(Long juego) {
+    public void setJuego(Juego juego) {
         this.juego = juego;
+    }
+
+    public Usuario getGanador() {
+        return ganador;
+    }
+
+    public void setGanador(Usuario ganador) {
+        this.ganador = ganador;
     }
 
     public EstadoTorneo getEstado() {

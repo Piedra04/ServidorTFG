@@ -29,7 +29,7 @@ public class PasswordHashService {
     /**
      * Verifica si una contraseña coincide con su hash.
      * 
-     * @param password Contraseña en texto plano a verificar.
+     * @param password       Contraseña en texto plano a verificar.
      * @param hashedPassword Contraseña hasheada con la que se comparará.
      * @return true si la contraseña coincide con el hash, false en caso contrario.
      */

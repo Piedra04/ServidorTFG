@@ -3,13 +3,15 @@ package com.backend.bibliomor_servidor.DTOs;
 import java.time.LocalDate;
 
 import com.backend.bibliomor_servidor.Enum.Recreo;
+import com.backend.bibliomor_servidor.Models.Juego;
+import com.backend.bibliomor_servidor.Models.Usuario;
 
 public class ReservaJuegoRequest {
 
     private LocalDate fecha;
-    private Recreo recreo; // Recreo en el que se realiza la reserva
-    private Long juegoId; // ID del juego reservado
-    private Long usuarioId; // ID del usuario que realiza la reserva
+    private Recreo recreo;
+    private Juego juego;
+    private Usuario usuario;
 
     // Getters y Setters
     public LocalDate getFecha() {
@@ -28,19 +30,19 @@ public class ReservaJuegoRequest {
         this.recreo = recreo;
     }
 
-    public Long getJuegoId() {
-        return juegoId;
+    public Juego getJuego() {
+        return juego;
     }
 
-    public void setJuegoId(Long juegoId) {
-        this.juegoId = juegoId;
+    public void setJuego(Juego juego) {
+        this.juego = juego;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

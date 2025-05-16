@@ -48,8 +48,10 @@ public class LibroController {
 
     /**
      * Crea un nuevo libro.
-     * 
-     * @param libroRequest Objeto con los datos del libro a crear.
+     *
+     * @param libroRequest Objeto con los datos del libro a crear (isbn, titulo,
+     *                     autor, sinopsis, curso, unidadesTotales,
+     *                     unidadesDisponibles, generos).
      * @return ResponseEntity con estado CREATED si se creó correctamente, o
      *         BAD_REQUEST si falló.
      */
@@ -76,8 +78,11 @@ public class LibroController {
 
     /**
      * Modifica un libro existente.
-     * 
-     * @param libroRequest Objeto con los datos actualizados del libro.
+     *
+     * @param isbn         ISBN del libro a modificar.
+     * @param libroRequest Objeto con los datos actualizados del libro (titulo,
+     *                     autor, sinopsis, curso, unidadesTotales,
+     *                     unidadesDisponibles, generos).
      * @return ResponseEntity con estado OK si se modificó correctamente, o
      *         NOT_FOUND si no existe.
      */
@@ -103,8 +108,8 @@ public class LibroController {
 
     /**
      * Elimina un libro por su ISBN.
-     * 
-     * @param request Mapa que contiene el ISBN del libro a eliminar.
+     *
+     * @param isbn ISBN del libro a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND
      *         si no existe.
      */

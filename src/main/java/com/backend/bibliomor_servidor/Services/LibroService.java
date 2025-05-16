@@ -38,14 +38,14 @@ public class LibroService {
     /**
      * Crea un nuevo libro.
      * 
-     * @param isbn ISBN del libro.
-     * @param titulo Título del libro.
-     * @param autor Autor del libro.
-     * @param sinopsis Sinopsis del libro.
-     * @param curso Curso asociado al libro.
-     * @param unidadesTotales Número total de unidades del libro.
+     * @param isbn                ISBN del libro.
+     * @param titulo              Título del libro.
+     * @param autor               Autor del libro.
+     * @param sinopsis            Sinopsis del libro.
+     * @param curso               Curso asociado al libro.
+     * @param unidadesTotales     Número total de unidades del libro.
      * @param unidadesDisponibles Número de unidades disponibles del libro.
-     * @param generos Lista de géneros asociados al libro.
+     * @param generos             Lista de géneros asociados al libro.
      * @return true si el libro se creó correctamente, false si ya existe.
      */
     public boolean createLibro(String isbn, String titulo, String autor, String sinopsis, String curso,
@@ -61,22 +61,23 @@ public class LibroService {
         }
 
         // Crear el libro
-        Libro libro = new Libro(isbn, titulo, autor, sinopsis, curso, unidadesTotales, unidadesDisponibles, new HashSet<>(generos));
+        Libro libro = new Libro(isbn, titulo, autor, sinopsis, curso, unidadesTotales, unidadesDisponibles,
+                new HashSet<>(generos));
         libroRepository.save(libro);
         return true;
     }
 
     /**
      * Modifica un libro existente.
-     * 
-     * @param isbn ISBN del libro a modificar.
-     * @param titulo Nuevo título del libro.
-     * @param autor Nuevo autor del libro.
-     * @param sinopsis Nueva sinopsis del libro.
-     * @param curso Nuevo curso asociado al libro.
-     * @param unidadesTotales Nuevo número total de unidades.
+     *
+     * @param isbn                ISBN del libro a modificar.
+     * @param titulo              Nuevo título del libro.
+     * @param autor               Nuevo autor del libro.
+     * @param sinopsis            Nueva sinopsis del libro.
+     * @param curso               Nuevo curso asociado al libro.
+     * @param unidadesTotales     Nuevo número total de unidades.
      * @param unidadesDisponibles Nuevo número de unidades disponibles.
-     * @param generos Lista de géneros asociados al libro.
+     * @param generos             Lista de géneros asociados al libro.
      * @return true si el libro se modificó correctamente, false si no existe.
      */
     public boolean modifyLibro(String isbn, String titulo, String autor, String sinopsis, String curso,
@@ -100,6 +101,8 @@ public class LibroService {
         }
         if (curso != null && !curso.trim().isEmpty()) {
             libro.setCurso(curso);
+        } else {
+            libro.setCurso(null); // Si el curso es nulo, se establece como null
         }
         libro.setUnidadesTotales(unidadesTotales);
         libro.setUnidadesDisponibles(unidadesDisponibles);
@@ -115,7 +118,7 @@ public class LibroService {
 
     /**
      * Elimina un libro por su ISBN.
-     * 
+     *
      * @param isbn ISBN del libro a eliminar.
      * @return true si el libro se eliminó correctamente, false si no existe.
      */

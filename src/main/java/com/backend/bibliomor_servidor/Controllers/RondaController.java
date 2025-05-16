@@ -20,7 +20,8 @@ public class RondaController {
     /**
      * Obtiene todas las rondas.
      * 
-     * @return ResponseEntity con la lista de rondas o un mensaje NOT_FOUND si no hay rondas.
+     * @return ResponseEntity con la lista de rondas o un mensaje NOT_FOUND si no
+     *         hay rondas.
      */
     @GetMapping
     public ResponseEntity<?> getAllRondas() {
@@ -34,7 +35,8 @@ public class RondaController {
      * Obtiene una ronda por su ID.
      * 
      * @param id ID de la ronda a buscar.
-     * @return ResponseEntity con la ronda encontrada o un mensaje NOT_FOUND si no existe.
+     * @return ResponseEntity con la ronda encontrada o un mensaje NOT_FOUND si no
+     *         existe.
      */
     @GetMapping("/{id}")
     public ResponseEntity<?> getRondaById(@PathVariable Long id) {
@@ -46,13 +48,15 @@ public class RondaController {
 
     /**
      * Crea una nueva ronda.
-     * 
-     * @param request Objeto con los datos de la ronda a crear.
-     * @return ResponseEntity con estado CREATED si se creó correctamente, o BAD_REQUEST si falló.
+     *
+     * @param request Objeto con los datos de la ronda a crear (nRonda, fecha,
+     *                campeonato).
+     * @return ResponseEntity con estado CREATED si se creó correctamente, o
+     *         BAD_REQUEST si falló.
      */
     @PostMapping
     public ResponseEntity<?> createRonda(@RequestBody RondaRequest request) {
-        boolean validar = rondaService.createRonda(request.getnRonda(), request.getFecha(), request.getCampeonatoId());
+        boolean validar = rondaService.createRonda(request.getnRonda(), request.getFecha(), request.getCampeonato());
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Ronda creada correctamente"));
@@ -64,13 +68,17 @@ public class RondaController {
 
     /**
      * Modifica una ronda existente.
-     * 
-     * @param request Objeto con los datos actualizados de la ronda.
-     * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
+     *
+     * @param id      ID de la ronda a modificar.
+     * @param request Objeto con los datos actualizados de la ronda (nRonda, fecha,
+     *                campeonato).
+     * @return ResponseEntity con estado OK si se modificó correctamente, o
+     *         NOT_FOUND si no existe.
      */
     @PutMapping("/{id}")
     public ResponseEntity<?> modifyRonda(@PathVariable long id, @RequestBody RondaRequest request) {
-        boolean validar = rondaService.modifyRonda(id, request.getnRonda(), request.getFecha(), request.getCampeonatoId());
+        boolean validar = rondaService.modifyRonda(id, request.getnRonda(), request.getFecha(),
+                request.getCampeonato());
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Ronda modificada correctamente"));
@@ -82,9 +90,10 @@ public class RondaController {
 
     /**
      * Elimina una ronda por su ID.
-     * 
-     * @param request Mapa que contiene el ID de la ronda a eliminar.
-     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
+     *
+     * @param id ID de la ronda a eliminar.
+     * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND
+     *         si no existe.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRonda(@PathVariable Long id) {

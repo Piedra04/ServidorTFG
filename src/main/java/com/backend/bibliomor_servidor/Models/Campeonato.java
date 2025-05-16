@@ -63,12 +63,12 @@ public class Campeonato {
     public Campeonato() {
     }
 
-    // Constructor con los campos que no son nulos (nullable = false)
-    public Campeonato(LocalDate fechaInicio, LocalDate fechaFin, String descripcion, Juego juego, EstadoTorneo estado) {
+    // Constructor con todos los campos
+    public Campeonato(LocalDate fechaInicio, LocalDate fechaFin, String descripcion, Usuario ganador, Juego juego, EstadoTorneo estado) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.descripcion = descripcion;
-        this.ganador = null;
+        this.ganador = ganador;
         this.juego = juego;
         this.estado = estado;
     }

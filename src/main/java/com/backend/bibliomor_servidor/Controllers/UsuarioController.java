@@ -130,8 +130,9 @@ public class UsuarioController {
 
     /**
      * Modifica un usuario existente.
-     * 
-     * @param modifyUserRequest Objeto con los datos actualizados del usuario.
+     *
+     * @param id ID del usuario a modificar.
+     * @param modifyUserRequest Objeto con los datos actualizados del usuario (correo, nombre, apellidos, fechaNacimiento, contrasena, curso, rol).
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
     @PutMapping("{id}")
@@ -157,8 +158,8 @@ public class UsuarioController {
 
     /**
      * Elimina un usuario por su id.
-     * 
-     * @param request Mapa que contiene el id del usuario a eliminar.
+     *
+     * @param id ID del usuario a eliminar.
      * @return ResponseEntity con estado OK si se eliminó correctamente, o NOT_FOUND si no existe.
      */
     @DeleteMapping("{id}")
