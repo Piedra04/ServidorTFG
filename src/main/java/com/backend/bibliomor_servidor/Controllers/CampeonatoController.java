@@ -81,10 +81,10 @@ public class CampeonatoController {
      * @param campeonatoRequest Objeto con los datos actualizados del campeonato.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
-    @PutMapping
-    public ResponseEntity<?> modifyCampeonato(@RequestBody CampeonatoRequest campeonatoRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyCampeonato(@PathVariable long id ,@RequestBody CampeonatoRequest campeonatoRequest) {
         boolean validar = campeonatoService.modifyCampeonato(
-                campeonatoRequest.getId(),
+                id,
                 campeonatoRequest.getFechaInicio(),
                 campeonatoRequest.getFechaFin(),
                 campeonatoRequest.getDescripcion(),

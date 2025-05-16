@@ -38,7 +38,7 @@ public class Usuario {
     private LocalDate fechaNacimiento;
 
     @Column(nullable = false)
-    private String contraseña;
+    private String contrasena;
 
     @Column(nullable = false, unique = true, length = 50)
     private String correo;
@@ -74,13 +74,13 @@ public class Usuario {
     }
 
     // Constructor con todos los campos
-    public Usuario(String nombre, String apellidos, LocalDate fechaNacimiento, String contraseña,
+    public Usuario(String nombre, String apellidos, LocalDate fechaNacimiento, String contrasena,
             String correo,
             Rol rol, String curso, LocalDate fechaRegistro) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.correo = correo;
         this.rol = rol;
         this.curso = curso;
@@ -121,12 +121,12 @@ public class Usuario {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getCorreo() {

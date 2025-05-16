@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import com.backend.bibliomor_servidor.Enum.EstadoTorneo;
 
 public class CampeonatoRequest {
-    private Long id;
+
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String descripcion;
@@ -13,13 +13,6 @@ public class CampeonatoRequest {
     private EstadoTorneo estado;
 
     // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public LocalDate getFechaInicio() {
         return fechaInicio;

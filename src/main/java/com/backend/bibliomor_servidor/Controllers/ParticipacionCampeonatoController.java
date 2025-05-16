@@ -68,9 +68,9 @@ public class ParticipacionCampeonatoController {
      * @param request Objeto con los datos actualizados de la participación.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
-    @PutMapping
-    public ResponseEntity<?> modifyParticipacion(@RequestBody ParticipacionCampeonatoRequest request) {
-        boolean validar = participacionCampeonatoService.modifyParticipacion(request.getId(), request.getUsuarioId(), request.getCampeonatoId());
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyParticipacion(@PathVariable long id,@RequestBody ParticipacionCampeonatoRequest request) {
+        boolean validar = participacionCampeonatoService.modifyParticipacion(id, request.getUsuarioId(), request.getCampeonatoId());
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Participación modificada correctamente"));

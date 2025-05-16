@@ -67,10 +67,10 @@ public class JuegoController {
      * 
      * @param gameRequest Objeto con los datos actualizados del juego.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
-     */
-    @PutMapping
-    public ResponseEntity<?> modifyGame(@RequestBody JuegoRequest gameRequest) {
-        boolean validar = juegoService.modifyGame(gameRequest.getId(), gameRequest.getNombre(), gameRequest.getnUnidades());
+     */ 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyGame(@PathVariable long id, @RequestBody JuegoRequest gameRequest) {
+        boolean validar = juegoService.modifyGame(id, gameRequest.getNombre(), gameRequest.getnUnidades());
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Juego modificado correctamente"));

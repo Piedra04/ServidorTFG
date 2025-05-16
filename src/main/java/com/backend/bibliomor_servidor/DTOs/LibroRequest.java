@@ -1,8 +1,9 @@
 package com.backend.bibliomor_servidor.DTOs;
 
-import java.util.Set;
+import java.util.List;
 
 import com.backend.bibliomor_servidor.Enum.EstadoLibro;
+import com.backend.bibliomor_servidor.Models.Genero;
 
 public class LibroRequest {
 
@@ -14,7 +15,7 @@ public class LibroRequest {
     private int unidadesTotales;
     private int unidadesDisponibles;
     private EstadoLibro estado;
-    private Set<Long> generos; // IDs de los géneros asociados
+    private List<Genero> generos; // IDs de los géneros asociados
 
     // Getters y Setters
     public String getIsbn() {
@@ -81,11 +82,11 @@ public class LibroRequest {
         this.estado = estado;
     }
 
-    public Set<Long> getGeneros() {
+    public List<Genero> getGeneros() {
         return generos;
     }
 
-    public void setGeneros(Set<Long> generos) {
+    public void setGeneros(List<Genero> generos) {
         this.generos = generos;
     }
 }

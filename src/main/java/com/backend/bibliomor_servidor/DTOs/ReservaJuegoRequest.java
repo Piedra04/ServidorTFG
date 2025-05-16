@@ -6,34 +6,12 @@ import com.backend.bibliomor_servidor.Enum.Recreo;
 
 public class ReservaJuegoRequest {
 
-    private Long id;
     private LocalDate fecha;
     private Recreo recreo; // Recreo en el que se realiza la reserva
     private Long juegoId; // ID del juego reservado
     private Long usuarioId; // ID del usuario que realiza la reserva
 
-    // Constructor vacío
-    public ReservaJuegoRequest() {
-    }
-
-    // Constructor con todos los campos
-    public ReservaJuegoRequest(Long id, LocalDate fecha, Recreo recreo, Long juegoId, Long usuarioId) {
-        this.id = id;
-        this.fecha = fecha;
-        this.recreo = recreo;
-        this.juegoId = juegoId;
-        this.usuarioId = usuarioId;
-    }
-
     // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public LocalDate getFecha() {
         return fecha;
     }

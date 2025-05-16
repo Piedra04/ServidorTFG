@@ -68,9 +68,9 @@ public class GeneroController {
      * @param generoRequest Objeto con los datos actualizados del género.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
-    @PutMapping
-    public ResponseEntity<?> modifyGenero(@RequestBody GeneroRequest generoRequest) {
-        boolean validar = generoService.modifyGenero(generoRequest.getId(), generoRequest.getNombre());
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyGenero(@PathVariable long id ,@RequestBody GeneroRequest generoRequest) {
+        boolean validar = generoService.modifyGenero(id, generoRequest.getNombre());
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Género modificado correctamente"));

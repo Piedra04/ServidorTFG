@@ -70,10 +70,10 @@ public class ParticipacionRondaController {
      * @param request Objeto con los datos actualizados de la participación.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
-    @PutMapping
-    public ResponseEntity<?> modifyParticipacion(@RequestBody ParticipacionRondaRequest request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyParticipacion(@PathVariable long id,@RequestBody ParticipacionRondaRequest request) {
         boolean validar = participacionRondaService.modifyParticipacion(
-            request.getId(), request.getUsuarioId(), request.getRondaId(), request.getResultado()
+            id, request.getUsuarioId(), request.getRondaId(), request.getResultado()
         );
 
         if (validar) {

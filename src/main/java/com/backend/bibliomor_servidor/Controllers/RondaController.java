@@ -68,9 +68,9 @@ public class RondaController {
      * @param request Objeto con los datos actualizados de la ronda.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
-    @PutMapping
-    public ResponseEntity<?> modifyRonda(@RequestBody RondaRequest request) {
-        boolean validar = rondaService.modifyRonda(request.getId(), request.getnRonda(), request.getFecha(), request.getCampeonatoId());
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyRonda(@PathVariable long id, @RequestBody RondaRequest request) {
+        boolean validar = rondaService.modifyRonda(id, request.getnRonda(), request.getFecha(), request.getCampeonatoId());
 
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Ronda modificada correctamente"));

@@ -39,7 +39,7 @@ public class Libro {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String sinopsis;
 
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 30)
     private String curso;
 
     @Column(nullable = false)

@@ -10,7 +10,7 @@ public class UsuarioRequest {
     private String nombre;
     private String apellidos;
     private LocalDate fechaNacimiento;
-    private String contraseña;
+    private String contrasena;
     private String curso;
     private Rol rol;
 
@@ -47,12 +47,12 @@ public class UsuarioRequest {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getCurso() {

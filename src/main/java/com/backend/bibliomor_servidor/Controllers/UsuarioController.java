@@ -39,7 +39,7 @@ public class UsuarioController {
      * @param correo Correo del usuario a buscar.
      * @return ResponseEntity con el usuario encontrado o un mensaje NOT_FOUND si no existe.
      */
-    @GetMapping("/{correo}")
+    @GetMapping("/correo/{correo}")
     public ResponseEntity<?> getUserByCorreo(@RequestBody String correo) {
         if (usuarioService.getUserByCorreo(correo) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el usuario"));
@@ -53,7 +53,7 @@ public class UsuarioController {
      * @param id ID del usuario a buscar.
      * @return ResponseEntity con el usuario encontrado o un mensaje NOT_FOUND si no existe.
      */
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         if (usuarioService.getUserById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el usuario"));
@@ -74,7 +74,7 @@ public class UsuarioController {
                 registerRequest.getApellidos(),
                 registerRequest.getFechaNacimiento(),
                 registerRequest.getCorreo(),
-                registerRequest.getContraseña(),
+                registerRequest.getContrasena(),
                 registerRequest.getCurso()
         );
 
@@ -94,7 +94,7 @@ public class UsuarioController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioRequest loginRequest) {
-        boolean validar = usuarioService.authenticateUser(loginRequest.getCorreo(), loginRequest.getContraseña());
+        boolean validar = usuarioService.authenticateUser(loginRequest.getCorreo(), loginRequest.getContrasena());
         if (validar) {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Credenciales correctas"));
         } else {
@@ -115,7 +115,7 @@ public class UsuarioController {
                 createUserRequest.getApellidos(),
                 createUserRequest.getFechaNacimiento(),
                 createUserRequest.getCorreo(),
-                createUserRequest.getContraseña(),
+                createUserRequest.getContrasena(),
                 createUserRequest.getCurso(),
                 createUserRequest.getRol()
         );
@@ -134,14 +134,15 @@ public class UsuarioController {
      * @param modifyUserRequest Objeto con los datos actualizados del usuario.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
-    @PutMapping
-    public ResponseEntity<?> modifyUser(@RequestBody UsuarioRequest modifyUserRequest) {
+    @PutMapping("{id}")
+    public ResponseEntity<?> modifyUser(@PathVariable long id, @RequestBody UsuarioRequest modifyUserRequest) {
         boolean validar = usuarioService.modifyUser(
+                id,
                 modifyUserRequest.getCorreo(),
                 modifyUserRequest.getNombre(),
                 modifyUserRequest.getApellidos(),
                 modifyUserRequest.getFechaNacimiento(),
-                modifyUserRequest.getContraseña(),
+                modifyUserRequest.getContrasena(),
                 modifyUserRequest.getCurso(),
                 modifyUserRequest.getRol()
         );
@@ -171,4 +172,4 @@ public class UsuarioController {
                     .body(Map.of("message", "No se ha encontrado el usuario para eliminar"));
         }
     }
-}  
+}

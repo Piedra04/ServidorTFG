@@ -56,10 +56,10 @@ public class ReservaLibroController {
      * @param request Objeto con los datos actualizados de la reserva.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
-    @PutMapping
-    public ResponseEntity<?> modifyReserva(@RequestBody ReservaLibroRequest request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyReserva(@PathVariable long id, @RequestBody ReservaLibroRequest request) {
         boolean validar = reservaLibroService.modifyReserva(
-            request.getId(), request.getFechaAdquisicion(), request.getFechaDevolucion(), request.getLibroId(), request.getUsuarioId()
+           id, request.getFechaAdquisicion(), request.getFechaDevolucion(), request.getLibroId(), request.getUsuarioId()
         );
 
         if (validar) {

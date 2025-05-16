@@ -56,10 +56,10 @@ public class ReservaJuegoController {
      * @param request Objeto con los datos actualizados de la reserva.
      * @return ResponseEntity con estado OK si se modificó correctamente, o NOT_FOUND si no existe.
      */
-    @PutMapping
-    public ResponseEntity<?> modifyReserva(@RequestBody ReservaJuegoRequest request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyReserva(@PathVariable long id, @RequestBody ReservaJuegoRequest request) {
         boolean validar = reservaJuegoService.modifyReserva(
-            request.getId(), request.getFecha(), request.getRecreo(), request.getJuegoId(), request.getUsuarioId()
+            id, request.getFecha(), request.getRecreo(), request.getJuegoId(), request.getUsuarioId()
         );
 
         if (validar) {

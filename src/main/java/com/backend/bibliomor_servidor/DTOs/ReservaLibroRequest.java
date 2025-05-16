@@ -4,34 +4,12 @@ import java.time.LocalDate;
 
 public class ReservaLibroRequest {
 
-    private Long id;
     private LocalDate fechaAdquisicion;
     private LocalDate fechaDevolucion; // Puede ser null si no se ha devuelto
     private String libroId; // ID del libro reservado
     private Long usuarioId; // ID del usuario que realiza la reserva
 
-    // Constructor vacío
-    public ReservaLibroRequest() {
-    }
-
-    // Constructor con todos los campos
-    public ReservaLibroRequest(Long id, LocalDate fechaAdquisicion, LocalDate fechaDevolucion, String libroId, Long usuarioId) {
-        this.id = id;
-        this.fechaAdquisicion = fechaAdquisicion;
-        this.fechaDevolucion = fechaDevolucion;
-        this.libroId = libroId;
-        this.usuarioId = usuarioId;
-    }
-
     // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public LocalDate getFechaAdquisicion() {
         return fechaAdquisicion;
     }
