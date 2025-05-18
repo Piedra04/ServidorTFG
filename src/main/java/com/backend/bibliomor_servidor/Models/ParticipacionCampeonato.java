@@ -1,6 +1,5 @@
 package com.backend.bibliomor_servidor.Models;
 
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,18 +14,15 @@ public class ParticipacionCampeonato {
 
 
     // Atributos de la clase ParticipacionCampeonato
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    // Hecho
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "usuario", nullable = false)
     private Usuario usuario;
 
-    // Hecho
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "campeonato", nullable = false)
     private Campeonato campeonato;
 

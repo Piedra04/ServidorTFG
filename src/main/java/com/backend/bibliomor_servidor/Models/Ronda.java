@@ -29,7 +29,6 @@ public class Ronda {
     @Column(nullable = false)
     private LocalDate fecha;
 
-    // Hecho
     @ManyToOne(optional = false)
     @JoinColumn(name = "campeonato", nullable = false)
     private Campeonato campeonato;

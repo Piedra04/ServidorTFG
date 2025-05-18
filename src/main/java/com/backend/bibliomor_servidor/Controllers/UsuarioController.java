@@ -40,7 +40,7 @@ public class UsuarioController {
      * @return ResponseEntity con el usuario encontrado o un mensaje NOT_FOUND si no existe.
      */
     @GetMapping("/correo/{correo}")
-    public ResponseEntity<?> getUserByCorreo(@RequestBody String correo) {
+    public ResponseEntity<?> getUserByCorreo(@PathVariable String correo) {
         if (usuarioService.getUserByCorreo(correo) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "No se ha encontrado el usuario"));
         }

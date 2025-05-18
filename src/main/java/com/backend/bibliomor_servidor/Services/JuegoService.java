@@ -64,7 +64,7 @@ public class JuegoService {
         if (juegoRepository.existsById(id)) {
             Juego game = juegoRepository.findById(id).get();
             // Verificar si el nombre ya existe en otro juego
-            if (juegoRepository.existsByNombre(nombre) && !game.getNombre().equals(nombre)) {
+            if (juegoRepository.existsByNombre(nombre) && !game.getNombre().toLowerCase().equals(nombre.toLowerCase())) {
                 return false; // El nombre ya existe
             }
 

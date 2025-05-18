@@ -48,7 +48,7 @@ public class ReservaJuegoController {
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Reserva creada correctamente"));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("message", "No se ha podido crear la reserva (juego o usuario no encontrados)"));
+                    .body(Map.of("message", "Ya no se pueden realizar más reservas para este juego este dia en este recreo"));
         }
     }
 

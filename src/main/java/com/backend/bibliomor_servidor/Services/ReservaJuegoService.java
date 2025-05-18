@@ -49,10 +49,13 @@ public class ReservaJuegoService {
      *         usuario no existen.
      */
     public boolean createReserva(LocalDate fecha, Recreo recreo, Juego juego, Usuario usuario) {
-
         if (juego != null && usuario != null) {
-            ReservaJuego reserva = new ReservaJuego(
-                    fecha, recreo, juego, usuario);
+            // Comprobar si ya se alcanzó el máximo de reservas para ese juego, fecha y recreo
+            long reservasActuales = reservaJuegoRepository.countByJuegoAndFechaAndRecreo(juego, fecha, recreo);
+            if (reservasActuales >= juego.getnUnidades()) {
+                return false; // No se pueden hacer más reservas para ese juego en ese recreo y fecha
+            }
+            ReservaJuego reserva = new ReservaJuego(fecha, recreo, juego, usuario);
             reservaJuegoRepository.save(reserva);
             return true;
         }

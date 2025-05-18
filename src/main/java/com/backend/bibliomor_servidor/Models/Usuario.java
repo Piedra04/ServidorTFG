@@ -23,7 +23,6 @@ import jakarta.persistence.Table;
 public class Usuario {
 
     // Atributos de la clase Usuario
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;

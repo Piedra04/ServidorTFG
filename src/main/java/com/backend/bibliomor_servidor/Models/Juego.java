@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 public class Juego {
 
     // Atributos de la clase Juego
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

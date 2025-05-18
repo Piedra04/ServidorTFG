@@ -39,12 +39,10 @@ public class Campeonato {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String descripcion;
 
-    // Hecho
     @ManyToOne
     @JoinColumn(name = "ganador", nullable = true)
     private Usuario ganador;
 
-    // Hecho
     @ManyToOne
     @JoinColumn(name = "juego", nullable = false)
     private Juego juego;

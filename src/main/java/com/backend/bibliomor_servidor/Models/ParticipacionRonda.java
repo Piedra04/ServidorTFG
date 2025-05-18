@@ -6,7 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,7 +18,6 @@ import jakarta.persistence.Table;
 public class ParticipacionRonda {
 
     // Atributos de la clase ParticipacionRonda
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -28,13 +26,11 @@ public class ParticipacionRonda {
     @Column(nullable = false)
     private Resultado resultado;
 
-    // Hecho
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "usuario", nullable = false)
     private Usuario usuario;
 
-    // Hecho
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ronda", nullable = false)
     private Ronda ronda;
 
