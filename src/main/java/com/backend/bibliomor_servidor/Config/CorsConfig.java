@@ -13,7 +13,11 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins(
+                            "http://localhost:4200",
+                            "http://bibliomor.pedro.dawmor.cloud.s3-website-us-east-1.amazonaws.com",
+                            "http://bibliomor.pedro.dawmor.cloud"
+                        )
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }
